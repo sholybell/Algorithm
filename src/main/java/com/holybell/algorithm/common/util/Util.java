@@ -1,4 +1,4 @@
-package com.holybell.algorithm.util;
+package com.holybell.algorithm.common.util;
 
 public class Util {
 
