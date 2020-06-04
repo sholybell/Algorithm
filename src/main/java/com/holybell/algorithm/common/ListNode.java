@@ -1,4 +1,4 @@
-package com.holybell.algorithm;
+package com.holybell.algorithm.common;
 
 public class ListNode {
 

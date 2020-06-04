@@ -1,6 +1,6 @@
 package com.holybell.algorithm.list;
 
-import com.holybell.algorithm.ListNode;
+import com.holybell.algorithm.common.ListNode;
 import com.holybell.algorithm.common.Base;
 
 import java.util.Stack;

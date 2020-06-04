@@ -5,6 +5,8 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
+ * 难度：困难
+ * <p>
  * 给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
  * 你只可以看到在滑动窗口 k 内的数字。
  * 滑动窗口每次只向右移动一位。
@@ -76,6 +78,10 @@ public class Question009_MaxSlidingWindow {
 
             // 队列头部存储的是上一个窗口的最大值下标
             // 每次窗口往右边移动，校验队列尾部的元素是否不大于当前元素，满足则将尾部元素弹出
+            // 这里的关注点有：
+            // 1. 这是个循环，如果窗口移动之后新加入的元素大于前面窗口的所有元素，那么前面队列将被清空
+            // 2. 如果当前元素大于队列尾部元素，说明这个窗口的最大元素肯定不会是队列尾部元素，可以把队列尾部的元素淘汰出去
+            // 3. 如果当前元素小于队列尾部的元素，队列尾部的元素是不需要弹出的，因为不知道窗口移动之后，需要加入的这个更小的元素是否会在某次移动变成窗口最大元素
             while (!dq.isEmpty() && nums[dq.peekLast()] <= nums[i]) {
                 dq.pollLast();
             }
@@ -93,7 +99,6 @@ public class Question009_MaxSlidingWindow {
                 results[i + 1 - k] = nums[dq.peek()];
             }
         }
-
         return results;
     }
 

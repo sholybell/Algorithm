@@ -1,7 +1,5 @@
 package com.holybell.algorithm.common;
 
-import com.holybell.algorithm.ListNode;
-
 public class Base {
 
     public static void swap(int[] a, int i, int j) {
