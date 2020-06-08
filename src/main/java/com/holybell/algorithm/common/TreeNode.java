@@ -2,10 +2,10 @@ package com.holybell.algorithm.common;
 
 public class TreeNode {
 
-    int data;
+    public int data;
 
-    TreeNode left;
-    TreeNode right;
+    public TreeNode left;
+    public TreeNode right;
 
     public int getData() {
         return data;
