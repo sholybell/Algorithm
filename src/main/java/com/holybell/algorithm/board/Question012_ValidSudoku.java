@@ -1,4 +1,4 @@
-package com.holybell.algorithm.sudoku;
+package com.holybell.algorithm.board;
 
 import java.util.HashMap;
 import java.util.Map;
