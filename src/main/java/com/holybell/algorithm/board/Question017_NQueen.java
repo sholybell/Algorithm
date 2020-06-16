@@ -44,12 +44,12 @@ public class Question017_NQueen {
 
     private static void myBacktrack(int row) {
 
-
     }
 
     private static boolean myIsNotUnderAttack(int row, int col) {
         return false;
     }
+
 
     private static void myPlaceQueen(int row, int col) {
 

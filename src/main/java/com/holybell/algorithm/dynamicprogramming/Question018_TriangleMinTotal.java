@@ -28,7 +28,7 @@ import java.util.List;
  * <p>
  * 链接：https://leetcode-cn.com/problems/triangle
  */
-public class Question013_TriangleMinTotal {
+public class Question018_TriangleMinTotal {
 
     /**
      * 求一个三角形从底部走到顶部的最小路径
