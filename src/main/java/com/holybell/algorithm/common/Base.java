@@ -1,5 +1,7 @@
 package com.holybell.algorithm.common;
 
+import java.util.Arrays;
+
 public class Base {
 
     public static void swap(int[] a, int i, int j) {
@@ -15,5 +17,12 @@ public class Base {
             curNode = curNode.next;
         }
         System.out.println();
+    }
+
+    public static void printSudoku(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            System.out.println(Arrays.toString(board[i]));
+        }
+
     }
 }
