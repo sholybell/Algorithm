@@ -30,17 +30,7 @@ public class Question025_CountBits {
      * @param num 非负整数
      */
     private static int[] myCountBits(int num) {
-        int[] bitCounts = new int[num + 1];
-        for (int i = 1; i <= num; i++) {
-            int count = 0;
-            int temp = i;
-            while (temp != 0) {
-                count++;
-                temp = temp & (temp - 1);
-            }
-            bitCounts[i] = count;
-        }
-        return bitCounts;
+        return null;
     }
 
 
@@ -85,19 +75,23 @@ public class Question025_CountBits {
      * @param num 非负整数
      */
     private static int[] countBits(int num) {
-        int[] ans = new int[num + 1];
-        for (int i = 0; i <= num; ++i)
-            ans[i] = popcount(i);
-        return ans;
-    }
 
-    private static int popcount(int x) {
-        int count;
-        for (count = 0; x != 0; ++count)
-            x &= x - 1; //zeroing out the least significant nonzero bit
-        return count;
-    }
+        if (num < 0) {
+            return null;
+        }
 
+        int[] bitCounts = new int[num + 1];
+        for (int i = 1; i <= num; i++) {
+            int count = 0;
+            int temp = i;
+            while (temp != 0) {
+                count++;
+                temp = temp & (temp - 1);
+            }
+            bitCounts[i] = count;
+        }
+        return bitCounts;
+    }
 
     public static void main(String[] args) {
 
