@@ -19,25 +19,6 @@ public class Question006_ShellSort extends Base {
 
     private static void myShellSort(int a[]) {
 
-        if (a == null || a.length == 0) {
-            return;
-        }
-
-        for (int step = a.length / 2; step > 0; step = step / 2) {                  // 比较的步长每次循环减少为一半
-            for (int comparePos = step; comparePos < a.length; comparePos++) {      // 从步长的下标开始往后遍历，每个元素不断地按步长前进，和相应元素比较
-                int beComparedPos = comparePos - step;                              // 求得第一个要被比较的步长前元素
-                int comparedValue = a[comparePos];                                  // 当前元素的值，用来和前面的元素比较
-                while (beComparedPos >= 0) {                                        // 一直比较到不能数组不能再往前
-                    if (a[beComparedPos] > comparedValue) {                         // 如果步长前元素大于当前元素
-                        a[beComparedPos + step] = a[beComparedPos];                 // 那么将步长前元素挪后一个步长
-                        beComparedPos = beComparedPos - step;                       // 继续往前一个步长的元素比较
-                    } else {                                                        // 比较到前面有步长距离元素小于等于当前元素，不再继续往前
-                        break;
-                    }
-                }
-                a[beComparedPos + step] = comparedValue;                            // 经过前面的比较，得到当前元素应该放的位置为comparedPos+step，无论前面操作是否有发生过元素变动
-            }
-        }
     }
 
 
@@ -92,14 +73,32 @@ public class Question006_ShellSort extends Base {
 
     private static void shellSort(int a[]) {
 
+        if (a == null || a.length == 0) {
+            return;
+        }
+
+        for (int step = a.length / 2; step > 0; step = step / 2) {                  // 比较的步长每次循环减少为一半
+            for (int comparePos = step; comparePos < a.length; comparePos++) {      // 从步长的下标开始往后遍历，每个元素不断地按步长前进，和相应元素比较
+                int beComparedPos = comparePos - step;                              // 求得第一个要被比较的步长前元素
+                int comparedValue = a[comparePos];                                  // 当前元素的值，用来和前面的元素比较
+                while (beComparedPos >= 0) {                                        // 一直比较到不能数组不能再往前
+                    if (a[beComparedPos] > comparedValue) {                         // 如果步长前元素大于当前元素
+                        a[beComparedPos + step] = a[beComparedPos];                 // 那么将步长前元素挪后一个步长
+                        beComparedPos = beComparedPos - step;                       // 继续往前一个步长的元素比较
+                    } else {                                                        // 比较到前面有步长距离元素小于等于当前元素，不再继续往前
+                        break;
+                    }
+                }
+                a[beComparedPos + step] = comparedValue;                            // 经过前面的比较，得到当前元素应该放的位置为comparedPos+step，无论前面操作是否有发生过元素变动
+            }
+        }
     }
 
 
     public static void main(String[] args) {
-        int a[] = {5, 4, 9, 8, 7, 6, 0, 1, 3, 2};
-        // int a[] = { 5, 4, 9, 8, 7, 6, 0, 1, 3, 2, 15, 14, 19, 18, 17, 16, 10, 11, 13,
-        // 12 };
-        // shellSort(a);
+//        int a[] = {5, 4, 9, 8, 7, 6, 0, 1, 3, 2};
+        int a[] = {5, 4, 9, 8, 7, 6, 0, 1, 3, 2, 15, 14, 19, 18, 17, 16, 10, 11, 13, 12};
+        shellSort(a);
         myShellSort(a);
         System.out.println(Arrays.toString(a));
     }

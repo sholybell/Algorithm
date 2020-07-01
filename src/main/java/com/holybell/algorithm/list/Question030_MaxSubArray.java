@@ -7,6 +7,10 @@ package com.holybell.algorithm.list;
  */
 public class Question030_MaxSubArray {
 
+    // 就不去考虑使用双重循环了~~~~~~
+
+
+
     // 3.动态规划，可以推出一个结论 取数组某一个位置，到这个元素连续路径的最大值一定在以下三种情况之一：
     // ①元素自己构成最大路径
     // ②元素自己和前面几个连续的元素构成最大路径
