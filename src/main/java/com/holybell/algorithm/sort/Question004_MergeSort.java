@@ -9,14 +9,29 @@ import java.util.Arrays;
 // 对于给定的一组记录（假定共有n个记录），首先将每两个相邻的长度为1的子序列进行归并，
 // 得到n/2（向上取整）个长度为2或1的有序子序列，再将其两两归并，
 // 反复执行此过程，直到得到一个有序序列。
-public class Question004_MergeSort extends Base{
+public class Question004_MergeSort extends Base {
 
-    public static void myMerge(int a[], int start, int mid, int end) {
+    /**
+     * 对归并排序的左右子数组分别进行排序
+     *
+     * @param a     待排序数组
+     * @param start 起始位置
+     * @param mid   中间位置
+     * @param end   结束位置
+     */
+    private static void myMerge(int a[], int start, int mid, int end) {
 
 
     }
 
-    public static void myMergeSort(int a[], int start, int end) {
+    /**
+     * 对指定数组进行归并排序算法
+     *
+     * @param a     待排序数组
+     * @param start 起始位置
+     * @param end   结束位置
+     */
+    private static void myMergeSort(int a[], int start, int end) {
 
 
     }
@@ -70,8 +85,15 @@ public class Question004_MergeSort extends Base{
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    public static void merge(int a[], int start, int mid, int end) {
-
+    /**
+     * 对归并排序的左右子数组分别进行排序
+     *
+     * @param a     待排序数组
+     * @param start 起始位置
+     * @param mid   中间位置
+     * @param end   结束位置
+     */
+    private static void merge(int a[], int start, int mid, int end) {
         int llen = mid - start + 1;
         int rlen = end - mid;
 
@@ -107,18 +129,25 @@ public class Question004_MergeSort extends Base{
                 a[start++] = right[i];
             }
         }
-
     }
 
-    public static void mergeSort(int a[], int start, int end) {
 
+    /**
+     * 对指定数组进行归并排序算法
+     *
+     * @param a     待排序数组
+     * @param start 起始位置
+     * @param end   结束位置
+     */
+    private static void mergeSort(int a[], int start, int end) {
         if (start < end) {
             int mid = (start + end) >>> 1;
+            // 递归左右子数组
             mergeSort(a, start, mid);
             mergeSort(a, mid + 1, end);
+            // 对左右子数组进行排序,会先对左右子数组只有一个元素的情况往上递归
             merge(a, start, mid, end);
         }
-
     }
 
     public static void main(String[] args) {

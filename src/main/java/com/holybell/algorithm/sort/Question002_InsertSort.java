@@ -11,8 +11,12 @@ import java.util.Arrays;
 // 按照记录的大小依次将当前处理的记录插入到其之前的有序序列中，直到最后一个记录插入到有序序列为止。
 public class Question002_InsertSort extends Base {
 
-
-    public static void myInsertSort(int a[]) {
+    /**
+     * 对给定数组进行插入排序
+     *
+     * @param a 给定数组
+     */
+    private static void myInsertSort(int a[]) {
 
 
     }
@@ -52,8 +56,12 @@ public class Question002_InsertSort extends Base {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    // 选择最小的和未排序的元素进行交换
-    public static void selectSort(int[] a) {
+    /**
+     * 对给定数组进行插入排序
+     *
+     * @param a 给定数组
+     */
+    private static void selectSort(int[] a) {
 
         if (a == null || a.length == 0) {
             return;

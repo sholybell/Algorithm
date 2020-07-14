@@ -13,7 +13,12 @@ import java.util.Arrays;
 public class Question001_SelectSort extends Base {
 
 
-    public static void mySelectSort(int a[]) {
+    /**
+     * 对数组进行选择排序
+     *
+     * @param a 给定数组
+     */
+    private static void mySelectSort(int a[]) {
 
     }
 
@@ -52,8 +57,12 @@ public class Question001_SelectSort extends Base {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    // 选择最小的和未排序的元素进行交换
-    public static void selectSort(int[] a) {
+    /**
+     * 对数组进行选择排序
+     *
+     * @param a 给定数组
+     */
+    private static void selectSort(int[] a) {
 
         if (a == null || a.length == 0) {
             return;

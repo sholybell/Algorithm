@@ -14,8 +14,14 @@ import java.util.Arrays;
  */
 public class Question005_QuickSort extends Base {
 
+    /**
+     * 对指定数组进行快速排序
+     *
+     * @param a    待排序数组
+     * @param low  起始位置
+     * @param high 结束位置
+     */
     private static void myQuickSort(int a[], int low, int high) {
-
 
     }
 
@@ -69,6 +75,13 @@ public class Question005_QuickSort extends Base {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
+    /**
+     * 对指定数组进行快速排序
+     *
+     * @param a    待排序数组
+     * @param low  起始位置
+     * @param high 结束位置
+     */
     private static void quickSort(int a[], int low, int high) {
 
         // 如果入参数组为空，直接返回
@@ -107,6 +120,8 @@ public class Question005_QuickSort extends Base {
         }
 
         a[mid] = midValue;      // 经过上面的循环，>= midValue的元素已经放到了mid的右边， <midValue的元素已经放到了mid的左边，midValue放到mid位置
+
+        // 补充:  位置mid可用于判断数组中第K小元素位置
 
         // 此时仅仅是midValue这个元素确定了位置，左右子数组仍旧无序，递归快排左右子数组
         myQuickSort(a, low, mid - 1);

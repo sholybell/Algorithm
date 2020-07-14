@@ -17,6 +17,11 @@ import java.util.Arrays;
  */
 public class Question006_ShellSort extends Base {
 
+    /**
+     * 对给定数组进行希尔排序
+     *
+     * @param a 待排序数组
+     */
     private static void myShellSort(int a[]) {
 
     }
@@ -71,6 +76,11 @@ public class Question006_ShellSort extends Base {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
+    /**
+     * 对给定数组进行希尔排序
+     *
+     * @param a 待排序数组
+     */
     private static void shellSort(int a[]) {
 
         if (a == null || a.length == 0) {

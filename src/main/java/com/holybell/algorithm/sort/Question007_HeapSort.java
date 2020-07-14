@@ -12,11 +12,22 @@ import java.util.Arrays;
  */
 public class Question007_HeapSort extends Base {
 
-
+    /**
+     * 对指定数组进行最小堆排序
+     *
+     * @param a 待排序数组
+     */
     private static void myMinHeapSort(int a[]) {
 
     }
 
+    /**
+     * 对指定数组进行最小堆调整
+     *
+     * @param a     待排序数组
+     * @param start 起始位置
+     * @param end   结束位置
+     */
     private static void myAdjustMinHeap(int a[], int start, int end) {
 
     }
@@ -56,6 +67,11 @@ public class Question007_HeapSort extends Base {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
+    /**
+     * 对指定数组进行最小堆排序
+     *
+     * @param a 待排序数组
+     */
     private static void minHeapSort(int a[]) {
 
         // 这是一个优化，即从二叉树的中间节点开始往后调整二叉树即可，不需要从0开始
@@ -71,6 +87,11 @@ public class Question007_HeapSort extends Base {
         }
     }
 
+    /**
+     * 对指定数组进行最小堆排序
+     *
+     * @param a 待排序数组
+     */
     private static void adjustMinHeap(int a[], int start, int end) {
 
         if (a == null || a.length == 0) {
@@ -80,7 +101,7 @@ public class Question007_HeapSort extends Base {
         int parentPos = start;
         int parentValue = a[start];
 
-        while (parentPos * 2 + 1 < end) {       // 下标从0开始，左子节点坐标为 parentPos * 2 + 1
+        while (parentPos * 2 + 1 < end) {       // 数组下标从0开始，左子节点坐标为 parentPos * 2 + 1，若从1开始，则为parentPos*2
             int childPos = parentPos * 2 + 1;   // childPos的赋值要写在while里面，否则如果仅仅满足第二个if，childPos的值就不会变动了，死循环
             if (childPos + 1 < end && a[childPos] > a[childPos + 1]) {  // 判断是否存在右子节点，同时右子节点小于左子节点，是的话取右子节点
                 childPos++;
