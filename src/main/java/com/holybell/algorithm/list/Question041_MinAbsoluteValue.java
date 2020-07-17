@@ -13,6 +13,11 @@ package com.holybell.algorithm.list;
  */
 public class Question041_MinAbsoluteValue {
 
+    /**
+     * 从给定升序数组中，查找绝对值最小的元素
+     *
+     * @param a 给定升序数组
+     */
     private static int myGetMinAbsoluteValue(int[] a) {
         return Integer.MIN_VALUE;
     }
