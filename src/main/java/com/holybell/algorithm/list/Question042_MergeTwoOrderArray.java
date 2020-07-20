@@ -152,12 +152,14 @@ public class Question042_MergeTwoOrderArray extends Base {
             }
         }
 
+        // 处理前面剩下没有放置会原数组的元素
         if (lpos < left.length) {
             for (int i = lpos; i < left.length; i++) {
                 a[start++] = left[i];
             }
         }
 
+        // 处理前面剩下没有放置会原数组的元素
         if (rpos < right.length) {
             for (int i = rpos; i < right.length; i++) {
                 a[start++] = right[i];
