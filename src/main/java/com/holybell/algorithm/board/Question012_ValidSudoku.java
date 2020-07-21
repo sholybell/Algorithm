@@ -24,7 +24,6 @@ public class Question012_ValidSudoku {
      * @param board 数独
      */
     private static boolean myIsValidSudoku(char[][] board) {
-
         return false;
     }
 
@@ -104,6 +103,7 @@ public class Question012_ValidSudoku {
 
 
     public static void main(String[] args) {
+
         char[][] board1 = new char[][]{
                 {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
                 {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
@@ -114,6 +114,7 @@ public class Question012_ValidSudoku {
                 {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
                 {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
                 {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+
         char[][] board2 = new char[][]{
                 {'8', '3', '.', '.', '7', '.', '.', '.', '.'},
                 {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
@@ -127,7 +128,7 @@ public class Question012_ValidSudoku {
 
         System.out.println("数独1是否合法:" + isValidSudoku(board1));
         System.out.println("数独2是否合法:" + isValidSudoku(board2));
-        System.out.println("----------------我的答案------------------>");
+        System.out.println("----------------本次解答--------------->");
         System.out.println("数独1是否合法:" + myIsValidSudoku(board1));
         System.out.println("数独2是否合法:" + myIsValidSudoku(board2));
     }
