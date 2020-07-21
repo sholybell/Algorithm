@@ -1,31 +1,31 @@
 package com.holybell.algorithm.list;
 
 
-import com.holybell.algorithm.sort.Question004_MergeSort;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
- * 难度：中等
+ * 难度:中等
  * <p>
- * 如何计算两个有序整型数组的交集
+ * 如何判断一个数组中数值是否连续相邻
  * <p>
- * 假设两个含有n个元素的有序（非降序）整型数组a和b，其中a={0,1,2,3,4},b={1,3,5,7,9},那么它们的交集为{1,3}。
+ * 一个数组序列，元素取值可能是0-65535中任意一个数，相同数值不会重复出现。
+ * 0是例外，可以反复出现。
  * <p>
- * 如果不采用HashSet(BitSet)存储顺序遍历数组a，再判断是否在数组b的方法，有没有其他思路？
+ * 设计一种算法，当从该数组序列中随意取5个数值，判断这5个数值是否连续相邻。
+ * <p>
+ * 需要注意以下4点：
+ * 1. 5个数值是允许乱序的，例如{8,7,5,0,6}
+ * 2. 0可以通配任意数值，例如{8,7,5,0,6}中的0可以通配成9或者4
+ * 3. 0可以出现多次
+ * 4. 全0算连续，只有一个非0算连续。
  */
-public class Question043_FindMixedInTwoOrderedArray {
+public class Question044_IsContinuous {
 
     /**
-     * 从两个有序数组中查询重叠的元素
+     * 判断指定数组内的元素是否连续相邻
      *
-     * @param a 有序数组1
-     * @param b 有序数组2
+     * @param a 指定数组
      */
-    private static Integer[] myMixed(int[] a, int[] b) {
-        return null;
+    private static boolean myIsContinuous(int[] a) {
+        return false;
     }
 
     // --------------------------------------------------------------------
@@ -64,54 +64,46 @@ public class Question043_FindMixedInTwoOrderedArray {
     // --------------------------------------------------------------------
 
     /**
-     * 从两个有序数组中查询重叠的元素
+     * 判断指定数组内的元素是否连续相邻
      *
-     * 二路归并法，思路类似归并排序的左右子数组比较过程，两个数组元素两两比较，提取重复元素
-     *
-     * @see Question004_MergeSort
-     *
-     * @param a 有序数组1
-     * @param b 有序数组2
+     * @param a 指定数组
      */
-    private static Integer[] mixed(int[] a, int[] b) {
+    private static boolean isContinuous(int[] a) {
 
-        // 以下情况就不需要处理了
-        if (a == null || a.length == 0 || b == null || b.length == 0) {
-            return null;
+        // 以下情况不处理
+        if (a == null || a.length == 0) {
+            return false;
         }
 
-        // 缓存两个数组重叠的元素
-        List<Integer> resultList = new ArrayList<>();
+        // 数组取值范围 0 - 65535 最大值最小值分别选取不可能的大小值
+        int max = -1, min = 65536;
+        int _0Count = 0;
 
-        int indexA = 0, indexB = 0;
-        // 只要一个数组比较全部元素，就可以不需要比较了
-        while (indexA < a.length && indexB < b.length) {
-            // 找到重复的元素
-            if (a[indexA] == b[indexB]) {
-                // 添加到结果集合中
-                resultList.add(a[indexA]);
-                // 两个数组的索引往后移动
-                indexA++;
-                indexB++;
-            }
-            // 当前比较的两个元素，数组A的更小，由于数组是升序的，那么只需要将数组A的往后移动继续与数组B比较
-            else if (a[indexA] < b[indexB]) {
-                indexA++;
-            }
-            // 当前比较的两个元素，数组B的更小，由于数组是升序的，那么只需要将数组B的往后移动继续与数组A比较
-            else {
-                indexB++;
+        // 求数组的最大值，最小值
+        for (int i = 0; i < a.length; i++) {
+            // 0属于特殊情况，不计入最大值最小值讨论
+            if (a[i] != 0) {
+                max = Math.max(max, a[i]);
+                min = Math.min(min, a[i]);
+            } else {
+                _0Count++;
             }
         }
 
-        return resultList.toArray(new Integer[0]);
+        // 若全部为0那么相邻
+        // 只有一个非0也算连续
+        if (_0Count == a.length || _0Count == a.length - 1) {
+            return true;
+        }
+
+        // 在不考虑0的情况下，如果一个数组要连续相邻，那么最大值-最小值=长度-1,
+        // 考虑0的情况下，排除全0和仅有一个非0的情况，最大值-最小值 < 长度-1
+        return (max - min) <= (a.length - 1);
     }
 
     public static void main(String[] args) {
-        int a[] = {0, 1, 2, 3, 4};
-        int b[] = {1, 3, 5, 6, 7};
-        System.out.println("正确答案:" + Arrays.toString(mixed(a, b)));
-        System.out.println("-----------------------------------------");
-        System.out.println("正确答案:" + Arrays.toString(myMixed(a, b)));
+        int a[] = {8, 7, 5, 0, 6};
+        System.out.println("正确答案:数组{8,7,5,0,6}" + (isContinuous(a) ? "连续相邻" : "不连续相邻"));
+        System.out.println("本次答案:数组{8,7,5,0,6}" + (myIsContinuous(a) ? "连续相邻" : "不连续相邻"));
     }
 }
