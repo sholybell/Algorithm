@@ -153,6 +153,8 @@ public class Question020_SolveSudoku extends Base {
                 }
             }
         }
+
+        // 从数独第一个位置开始解析数独
         backtrack(0, 0);
     }
 
@@ -164,9 +166,7 @@ public class Question020_SolveSudoku extends Base {
      * @param col 列
      */
     private static void placeNumber(int d, int row, int col) {
-
         int idx = (row / n) * n + col / n;
-
         rows[row][d]++;
         columns[col][d]++;
         boxes[idx][d]++;
@@ -185,16 +185,21 @@ public class Question020_SolveSudoku extends Base {
         if (result_board[row][col] == '.') {
             // 数独能放的数字就是1-9
             for (int d = 1; d < 10; d++) {
+                // 判断当前位置是否可以放置1-9某个数值
                 if (couldPlace(d, row, col)) {
+                    // 放置数字，并且记录被该数字影响的、列、九宫格
                     placeNumber(d, row, col);
+                    // 当前行确定了一个数字，继续求解下一个位置（可能同一行，可能下一行第一个位置）
                     placeNextNumbers(row, col);
 
                     // 如果数独得到了解答，那么就不需要回溯，因为数独只有唯一解
+                    // 如果没有得到解答，那么删除当前行的放置结果，尝试在当前行放置另一个1-9的数字
                     if (!sudokuSolved)
                         removeNumber(d, row, col);
                 }
             }
-        } else {    // 当前位置已经放置数字，那么继续放置下一个位置的数字
+        } else {
+            // 当前位置已经放置数字，那么继续放置下一个位置的数字（可能同一行，可能下一行第一个位置）
             placeNextNumbers(row, col);
         }
     }
@@ -207,7 +212,6 @@ public class Question020_SolveSudoku extends Base {
      * @param col 列
      */
     private static boolean couldPlace(int d, int row, int col) {
-
         int idx = (row / n) * n + col / n;
         return rows[row][d] + columns[col][d] + boxes[idx][d] == 0;
     }
@@ -237,10 +241,14 @@ public class Question020_SolveSudoku extends Base {
         // 如果行列都到达了最后一个位置，那么数独得到了解答
         if ((col == N - 1) && (row == N - 1)) {
             sudokuSolved = true;
-        } else { // 数独没有得到解答，那么判断当前列是否到达最后一个位置，没有则递归下一列，否则递归下一行首个位置
+        } else {
+            // 数独没有得到解答，那么判断当前列是否到达最后一个位置，
+            // 没有则递归下一列，否则递归下一行首个位置
             if (col == N - 1) {
+                // 递归下一行第一个位置
                 backtrack(row + 1, 0);
             } else {
+                // 递归当前行下一列
                 backtrack(row, col + 1);
             }
         }
@@ -260,13 +268,16 @@ public class Question020_SolveSudoku extends Base {
                 {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
         };
 
+        // 正确解答（注释，否则影响解答）
         // solveSudoku(board);
         // printSudu(Question07SS.board);
 
-        System.out.println("------------->");
-
+        // 主要用于重置上面正确解答的操作影响
         sudokuSolved = false;
         result_board = new char[][]{};
+
+        System.out.println("------本次解答------->");
+
         mySolveSudoku(board);
         printSudoku(result_board);
     }
