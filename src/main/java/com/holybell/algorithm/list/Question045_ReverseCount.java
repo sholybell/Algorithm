@@ -148,6 +148,6 @@ public class Question045_ReverseCount {
         System.out.println("正确答案，反序对:" + reverseCount(a));
         reverseCount = 0;// 重置结果
         int b[] = {1, 5, 3, 2, 6};
-        System.out.println("本次答案，反序对:" + myReverseCount(a));
+        System.out.println("本次答案，反序对:" + myReverseCount(b));
     }
 }
