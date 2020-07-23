@@ -20,7 +20,9 @@ public class Question020_SolveSudoku extends Base {
     // 数独行长
     private static int N = n * n;
 
-    private static int[][] rows = new int[N][N + 1]; // 第一纬度的矩阵从0开始，因此长度可以为N，第二维矩阵0下标是不用的，而9下标又需要用到，因此需要N+1的长度
+    // 第一维度的矩阵从0开始，因此长度可以为N，第二维矩阵0下标是不用的，而9下标又需要用到，因此需要N+1的长度
+    // 第一维度用于记录行或者列，第二维度记录当前行或者列占有的数字（1-9）
+    private static int[][] rows = new int[N][N + 1];
     private static int[][] columns = new int[N][N + 1];
     private static int[][] boxes = new int[N][N + 1];
 
