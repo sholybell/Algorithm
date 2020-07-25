@@ -22,7 +22,7 @@ public class Question011_LowestCommonAncestor {
 
     private static TreeNode myLowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
-        return null;
+        return new TreeNode(Integer.MIN_VALUE);
     }
 
 
@@ -60,6 +60,8 @@ public class Question011_LowestCommonAncestor {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
+
+    // 解法1：
 
     private static TreeNode lowestCommonAncestorV1(TreeNode root, TreeNode p, TreeNode q) {
         // Traverse the tree
@@ -91,6 +93,11 @@ public class Question011_LowestCommonAncestor {
         int mid = (currentNode == p || currentNode == q) ? 1 : 0;
 
         // If any two of the flags left, right or mid become True
+        // 这里的ans是否会出现被多次覆盖结果得到最远公共祖先的情况，以下分析:
+        // 1. 仅有在 (currentNode == p || currentNode == q) 时通过mid=1 才有可能递归回来的时候left\right =1
+        // 2. 当p\q 两个节点分别为某个子树左右子树一个节点时，左右子树户通过mid=1 最终递归回来  left=1 right=1，此时ans得到第一个最近的祖先，但是继续递归回去这个节点的父节点
+        // 只会出现left 或者 right =1 的情况，ans不会被覆盖
+        // 3. 当p\q 两个节点为父子节点，那么会出现 left\right 二者之一为1，然后父节点mid=1，此时最近的祖先节点即为p或者q之一，在往上递归不会再出现left\right\mid两个为1的情况
         if (mid + left + right >= 2) {
             ans = currentNode;
         }
@@ -98,6 +105,9 @@ public class Question011_LowestCommonAncestor {
         // Return true if any one of the three bool values is True.
         return (mid + left + right > 0);
     }
+
+
+    // 解法2：
 
     /**
      * 使用一个Map缓存每个节点的父节点信息，
