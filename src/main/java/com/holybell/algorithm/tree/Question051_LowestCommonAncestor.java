@@ -11,6 +11,7 @@ import com.holybell.algorithm.common.TreeNode;
  * 的深度尽可能大（一个节点也可以是它自己的祖先）。”
  * <p>
  * 其实就是求最后一个让他们分叉的节点，分叉节点的父节点也是祖先节点
+ * <p>
  * https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
  */
 public class Question051_LowestCommonAncestor {
@@ -24,6 +25,7 @@ public class Question051_LowestCommonAncestor {
      * @param root 当前要判断是否为分支节点的节点
      */
     private static TreeNode myLowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
         return new TreeNode();
     }
 
