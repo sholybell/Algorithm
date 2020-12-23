@@ -81,6 +81,7 @@ public class LeetCode51_NQueen {
      * @param diagonals2 表示对角线被占据的集合
      */
     private static void backtrack(List<List<String>> result, int[] queens, int n, int row, Set<Integer> columns, Set<Integer> diagonals1, Set<Integer> diagonals2) {
+        // 当前已经将列填满,登记一种解法
         if (columns.size() == n) {
             result.add(genSingleResult(queens, n));
         } else {
