@@ -81,4 +81,29 @@ public class TreeUtil {
         }
     }
 
+    /**
+     * 通过整形数组构建二叉树
+     *
+     * @param array 整形数组
+     * @param index 本次处理的数组下标
+     */
+    public static TreeNode createBinaryTreeByArray(Integer[] array, int index) {
+        TreeNode tn = null;
+        if (index < array.length) {
+            Integer value = array[index];
+            if (value == null) {
+                return null;
+            }
+            tn = new TreeNode(value);
+            tn.left = createBinaryTreeByArray(array, 2 * index + 1);
+            tn.right = createBinaryTreeByArray(array, 2 * index + 2);
+            return tn;
+        }
+        return tn;
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = createBinaryTreeByArray(new Integer[]{3, 9, 20, null, null, 15, 7}, 0);
+        show(root);
+    }
 }
