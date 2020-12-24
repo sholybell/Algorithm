@@ -99,7 +99,7 @@ public class LeetCode46_permute {
                 track.add(num);
                 // 进入下一层递归
                 backtrack(nums, track, result);
-                // 回溯，將前面采纳的数字作废
+                // 回溯，將前面采纳的数字作废，注意remove方法传入基本类型和传入Object类型的差异
                 track.remove(Integer.valueOf(num));
             }
         }
