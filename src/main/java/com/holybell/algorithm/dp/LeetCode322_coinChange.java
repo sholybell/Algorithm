@@ -36,7 +36,7 @@ import java.util.Arrays;
  * 1 <= coins[i] <= 231 - 1
  * 0 <= amount <= 104
  **/
-public class LeetCode_coinChange {
+public class LeetCode322_coinChange {
 
     public static int _coinChange(int[] coins, int amount) {
         return -1;
