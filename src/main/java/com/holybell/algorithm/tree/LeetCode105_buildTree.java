@@ -95,7 +95,7 @@ public class LeetCode105_buildTree {
         // ----------------------------- 类似二叉树的前序遍历操作部分 结束
 
         // 计算左右子节点，类似二叉树的左右子节点遍历操作
-        TreeNode left = helper(preOrder, preOrderStart + 1, preOrderEnd + 1 + offset, inOrder, inOrderStart, index - 1);
+        TreeNode left = helper(preOrder, preOrderStart + 1, preOrderStart + 1 + offset, inOrder, inOrderStart, index - 1);
         TreeNode right = helper(preOrder, preOrderStart + 1 + offset + 1, preOrderEnd, inOrder, index + 1, inOrderEnd);
 
         root.left = left;
