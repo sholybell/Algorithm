@@ -93,8 +93,11 @@ public class LeetCode124_maxPathSum {
         int rightSum = Math.max(0, helper(root.right));
 
         // 记录当前节点考虑了左右子树的最大路径和和自己的值之后的最大值，与之前获得的最大值比较，取更大值
+        // 注意与下面那行代码作区分，这里是以当前节点为路径之一，而不是当前节点作为路径结尾，因此这里把采用左子树和+右子树和+当前节点的值
         result = Math.max(leftSum + rightSum + root.data, result);
-        // 返回经过当前这个节点的最大路径和，注意这里可能由于左右子树都是负数节点（被前面的操作取0），因此当前节点自身构成最大路径和的情况
+
+        // 记录以当前节点为路径结尾时最大路径和，因此只能考虑左右子树较大值+当前节点的值
+        // 注意这里可能由于左右子树都是负数节点（被前面的操作取0），因此当前节点自身构成最大路径和的情况
         return Math.max(leftSum, rightSum) + root.data;
     }
 
