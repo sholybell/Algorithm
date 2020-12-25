@@ -90,13 +90,13 @@ public class LeetCode105_buildTree {
         // 检索这个头结点在中序遍历中的位置
         int index = findIndexInOrder(inOrder, rootVal);
         // 计算偏移量，root是本次子二叉树的根节点，根据二叉树的中序遍历头结点位置，左右元素各自为这个根节点的左右子节点，此处计算得到左子树应该有多少个元素(不包含前序遍历的头结点)
-        int offset = index - inOrderStart - 1;
+        int offset = index - inOrderStart;
 
         // ----------------------------- 类似二叉树的前序遍历操作部分 结束
 
         // 计算左右子节点，类似二叉树的左右子节点遍历操作
-        TreeNode left = helper(preOrder, preOrderStart + 1, preOrderStart + 1 + offset, inOrder, inOrderStart, index - 1);
-        TreeNode right = helper(preOrder, preOrderStart + 1 + offset + 1, preOrderEnd, inOrder, index + 1, inOrderEnd);
+        TreeNode left = helper(preOrder, preOrderStart + 1, preOrderStart + offset, inOrder, inOrderStart, index - 1);
+        TreeNode right = helper(preOrder, preOrderStart + 1 + offset, preOrderEnd, inOrder, index + 1, inOrderEnd);
 
         root.left = left;
         root.right = right;
