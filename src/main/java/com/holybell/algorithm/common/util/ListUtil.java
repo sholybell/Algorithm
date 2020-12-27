@@ -38,4 +38,27 @@ public class ListUtil {
 
         return nodeCache.get(0);
     }
+
+    /**
+     * 从目标链表中查询目标节点出现的位置
+     *
+     * @param head   目标链表头节点
+     * @param target 要查询的目标节点
+     */
+    public static int findIndexByValue(ListNode head, ListNode target) {
+
+        if (target == null) {
+            return -1;
+        }
+
+        int i = 1;
+        while (head != null) {
+            if (head == target) {
+                return i;
+            }
+            head = head.next;
+            i++;
+        }
+        return -1;
+    }
 }
