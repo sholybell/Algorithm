@@ -20,7 +20,7 @@ public class Base {
     public static void print(ListNode head) {
         ListNode curNode = head;
         while (curNode != null) {
-            System.out.print(curNode.data + " ");
+            System.out.print(curNode.val + " ");
             curNode = curNode.next;
         }
         System.out.println();
