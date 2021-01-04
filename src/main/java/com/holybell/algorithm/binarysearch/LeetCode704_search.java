@@ -1,5 +1,7 @@
 package com.holybell.algorithm.binarysearch;
 
+import java.util.Arrays;
+
 /**
  * 难度：简单
  * <p>
@@ -135,6 +137,80 @@ public class LeetCode704_search {
         return -1;
     }
 
+    // ---------------------------------------- 补充，在有重复集合中，查找目标数字的最左或者最优边界
+
+    /**
+     * 在可能有重复数字的有序集合中，查找某个目标数字最左边界位置
+     *
+     * @param nums   可能有重复数字的有序集合
+     * @param target 目标数字
+     */
+    private static int searchLeft(int[] nums, int target) {
+        // 提供的数组不合法，直接返回-1
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+
+        int left = 0, right = nums.length - 1;  // 这样，二分查找的区间在[left,right]
+
+        // 由于二分查找区间为双闭区间[left,right]，因此只有当left=right+1，即区间[right+1,right]，或者right=left-1，即区间[left,left-1]才没有未查找的位置
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {          // 查找到了目标数字，由于不确定当前数字是否为最左位置，尝试将查找区间的右边界缩小1继续查找该数字
+                right = mid - 1;                // 双闭区间，因此取mid-1
+            } else if (nums[mid] > target) {    // 和原先二分查找一致，中间值大于目标数字，则右边界回退1位
+                right = mid - 1;                // 双闭区间，因此取mid+1
+            } else if (nums[mid] < target) {    // 和原先二分查找一致，中间值小于目标数字，则左边界前进1位
+                left = mid + 1;                 // 双闭区间，因此取mid-1
+            }
+        }
+
+        // 由于终止条件为left = right+1， 或者 right = left -1
+        // 这里取left作为最终返回结果，而left=right+1,right由数组最后一个位置开始回退，需要避免数组下标越界
+        if (left >= nums.length || nums[left] != target) {
+            return -1;
+        }
+
+        return left;
+    }
+
+    /**
+     * 在可能有重复数字的有序集合中，查找某个目标数字最右边界位置
+     *
+     * @param nums   可能有重复数字的有序集合
+     * @param target 目标数字
+     */
+    private static int searchRight(int[] nums, int target) {
+        // 提供的数组不合法，直接返回-1
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+
+        int left = 0, right = nums.length - 1;  // 这样，二分查找的区间在[left,right]
+
+        // 由于二分查找区间为双闭区间[left,right]，因此只有当left=right+1，即区间[right+1,right]，或者right=left-1，即区间[left,left-1]才没有未查找的位置
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {          // 查找到了目标数字，由于不确定当前数字是否为最左位置，尝试将查找区间的左边界前进1位
+                left = mid + 1;                // 双闭区间，因此取mid+1
+            } else if (nums[mid] > target) {    // 和原先二分查找一致，中间值大于目标数字，则右边界回退1位
+                right = mid - 1;                // 双闭区间，因此取mid+1
+            } else if (nums[mid] < target) {    // 和原先二分查找一致，中间值小于目标数字，则左边界前进1位
+                left = mid + 1;                 // 双闭区间，因此取mid-1
+            }
+        }
+
+        // 由于终止条件为left = right+1， 或者 right = left -1
+        // 这里取right,由于right=left-1,而left由数组起始位置0开始前进，需要避免right=0-1从而下标负数的情况
+        if (right < 0 || nums[right] != target) {
+            return -1;
+        }
+
+        return right;
+    }
+
     public static void main(String[] args) {
         int[] nums = new int[]{-1, 0, 3, 5, 9, 12};
         int target = 9;
@@ -145,5 +221,10 @@ public class LeetCode704_search {
         System.out.println(search(nums, target));
         System.out.println("正确答案V2:");
         System.out.println(searchV2(nums, target));
+
+        System.out.println("------------------------->扩展题目");
+        nums = new int[]{-1, 0, 3, 3, 3, 3, 5, 5, 5, 9, 12};
+        System.out.println("在数组" + Arrays.toString(nums) + "中,数字3最左边界为" + searchLeft(nums, 3));
+        System.out.println("在数组" + Arrays.toString(nums) + "中,数字3最右边界为" + searchRight(nums, 3));
     }
 }
