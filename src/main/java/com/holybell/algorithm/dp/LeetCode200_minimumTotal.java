@@ -1,34 +1,41 @@
 package com.holybell.algorithm.dp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * 难度：中等
+ * 给定一个三角形 triangle ，找出自顶向下的最小路径和。
  * <p>
- * 给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
+ * 每一步只能移动到下一行中相邻的结点上。
+ * 相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，
+ * 如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。
  * <p>
- * 例如，给定三角形：
+ * 示例 1：
+ * 输入：triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
+ * 输出：11
+ * 解释：如下面简图所示：
+ * 2
+ * 3 4
+ * 6 5 7
+ * 4 1 8 3
+ * 自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。
  * <p>
- * [
+ * 示例 2：
+ * 输入：triangle = [[-10]]
+ * 输出：-10
  * <p>
- * [2],
+ * 提示：
+ * 1 <= triangle.length <= 200
+ * triangle[0].length == 1
+ * triangle[i].length == triangle[i - 1].length + 1
+ * -104 <= triangle[i][j] <= 104
  * <p>
- * [3,4],
- * <p>
- * [6,5,7],
- * <p>
- * [4,1,8,3]
- * <p>
- * ] 自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。
- * <p>
- * 说明：
- * <p>
- * 如果你可以只使用 O(n) 的额外空间（n 为三角形的总行数）来解决这个问题，那么你的算法会很加分。
+ * 进阶： 你可以只使用 O(n) 的额外空间（n 为三角形的总行数）来解决这个问题吗？
  * <p>
  * 链接：https://leetcode-cn.com/problems/triangle
  */
-public class Question018_TriangleMinTotal {
+public class LeetCode200_minimumTotal {
 
     /**
      * 求一个三角形从底部走到顶部的最小路径
@@ -37,6 +44,7 @@ public class Question018_TriangleMinTotal {
 
         return -1;
     }
+
 
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
@@ -75,13 +83,16 @@ public class Question018_TriangleMinTotal {
 
     private static int minimumTotal(List<List<Integer>> triangle) {
         int row = triangle.size();
-        // 保存某一行某个位置相邻的下一行两个节点走上来最小的距离
+        // 保存每个节点到底层的最短路径
         int[] minlen = new int[row + 1];
         // 从最底下一层开始往上走
         for (int level = row - 1; level >= 0; level--) {
             // 扫描当前行的某个位置应该从下一行哪个相邻位置走上来距离最短
             for (int i = 0; i <= level; i++) { // 第i行有i+1个数字 这个得从前往后，否则如果从后往前，minLen就会用到同一行后一个数字比较之后较小的值，重复计算了
                 // System.out.println(java.util.Arrays.toString(minlen));
+
+                // 理清楚数学关系: 每一行level对应level+1个元素
+                // 从下往上，当前层 i 和 i+1 对应上一层的 i
                 minlen[i] = Math.min(minlen[i], minlen[i + 1]) + triangle.get(level).get(i);
             }
         }
@@ -89,28 +100,15 @@ public class Question018_TriangleMinTotal {
     }
 
     public static void main(String[] args) {
-        List<List<Integer>> outerList = new ArrayList<>();
-        List<Integer> _1List = new ArrayList<>();
-        _1List.add(2);
-        List<Integer> _2List = new ArrayList<>();
-        _2List.add(3);
-        _2List.add(4);
-        List<Integer> _3List = new ArrayList<>();
-        _3List.add(6);
-        _3List.add(5);
-        _3List.add(7);
-        List<Integer> _4List = new ArrayList<>();
-        _4List.add(4);
-        _4List.add(1);
-        _4List.add(8);
-        _4List.add(3);
-        outerList.add(_1List);
-        outerList.add(_2List);
-        outerList.add(_3List);
-        outerList.add(_4List);
+        List<List<Integer>> list = Arrays.asList(
+                Arrays.asList(2),
+                Arrays.asList(3, 4),
+                Arrays.asList(6, 5, 7),
+                Arrays.asList(4, 1, 8, 3)
+        );
 
-        System.out.println("正确答案:" + minimumTotal(outerList));
+        System.out.println("你的解答:" + myMinimumTotal(list));
         System.out.println("------------------------------->");
-        System.out.println("本次解答:" + myMinimumTotal(outerList));
+        System.out.println("正确答案:" + minimumTotal(list));
     }
 }
