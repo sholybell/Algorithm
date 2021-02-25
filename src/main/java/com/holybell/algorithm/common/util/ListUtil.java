@@ -61,4 +61,28 @@ public class ListUtil {
         }
         return -1;
     }
+
+    /**
+     * 根据传入的数组，构建一个链表
+     */
+    public static ListNode createLinkedList(int[] nums) {
+        ListNode head = new ListNode(nums[0]);
+        ListNode pre = head;
+        for (int i = 1; i < nums.length; i++) {
+            ListNode node = new ListNode(nums[i]);
+            pre.next = node;
+            pre = node;
+        }
+        return head;
+    }
+
+    public static String printLinkedList(ListNode node) {
+        StringBuilder sb = new StringBuilder();
+        while (node != null) {
+            sb.append(node.val).append(" -> ");
+            node = node.next;
+        }
+        sb.append("NULL");
+        return sb.toString();
+    }
 }

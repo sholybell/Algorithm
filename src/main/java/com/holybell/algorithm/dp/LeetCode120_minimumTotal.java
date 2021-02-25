@@ -1,10 +1,11 @@
 package com.holybell.algorithm.dp;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 难度:中等
+ * <p>
  * 给定一个三角形 triangle ，找出自顶向下的最小路径和。
  * <p>
  * 每一步只能移动到下一行中相邻的结点上。
@@ -35,7 +36,7 @@ import java.util.List;
  * <p>
  * 链接：https://leetcode-cn.com/problems/triangle
  */
-public class LeetCode200_minimumTotal {
+public class LeetCode120_minimumTotal {
 
     /**
      * 求一个三角形从底部走到顶部的最小路径
