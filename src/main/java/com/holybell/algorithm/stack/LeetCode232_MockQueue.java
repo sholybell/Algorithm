@@ -49,14 +49,11 @@ public class LeetCode232_MockQueue {
 
     static class MyQueue {
 
-        Stack<Integer> stack1;
-        Stack<Integer> stack2;
-
         /**
          * Initialize your data structure here.
          */
         public MyQueue() {
-           
+
         }
 
         /**
