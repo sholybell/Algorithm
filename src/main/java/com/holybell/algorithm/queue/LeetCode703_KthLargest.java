@@ -180,6 +180,8 @@ public class LeetCode703_KthLargest {
         System.out.println("插入3后第3大的元素:" + myKthLargest.add(3));
         System.out.println("插入4后第3大的元素:" + myKthLargest.add(4));
 
+        System.out.println();
+
         System.out.println("正确答案:");
         KthLargestV1 kthLargest = new KthLargestV1(3, new int[]{4, 5, 8, 2});
         System.out.println("插入3后第3大的元素:" + kthLargest.add(3));
