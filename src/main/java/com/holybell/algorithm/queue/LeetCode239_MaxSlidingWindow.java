@@ -63,7 +63,7 @@ public class LeetCode239_MaxSlidingWindow {
 
         // 如果给定数组为null，或者给定数组就没有达到窗口长度返回null
         if (nums == null || nums.length < k) {
-            return null;
+            return new int[0];
         }
 
         // 双端队列，存储窗口的下标
@@ -104,6 +104,11 @@ public class LeetCode239_MaxSlidingWindow {
      * 优先队列，利用大顶堆特性
      */
     private static int[] maxSlidingWindowV2(int[] nums, int k) {
+
+        // 如果给定数组为null，或者给定数组就没有达到窗口长度返回null
+        if (nums == null || nums.length < k) {
+            return new int[0];
+        }
 
         int n = nums.length;
         // 使用优先队列，排序规则为大顶堆，队列存储元素值和元素位置
