@@ -1,6 +1,7 @@
 package com.holybell.algorithm.tree;
 
 import com.holybell.algorithm.common.TreeNode;
+import com.holybell.algorithm.common.util.TreeUtil;
 
 import java.util.Stack;
 
@@ -12,8 +13,7 @@ import java.util.Stack;
  * 1. 一棵二叉树满足左子节点小于父节点，右子节点大于父节点，而一颗二叉搜索树更加严格，左子树全部小于父节点，右子树全都大于父节点
  * 2. 一颗二叉搜索树的中序遍历一定是递增的
  */
-public class Question010_IsValidBST {
-
+public class LeetCode98_isValidBST {
 
     /**
      * 校验一颗二叉树是否为二叉搜索树
@@ -21,33 +21,8 @@ public class Question010_IsValidBST {
      * @param root 根节点
      */
     private static boolean myIsValidBST(TreeNode root) {
-
-        if (root == null) {
-            return true;
-        }
-
-        Stack<TreeNode> stack = new Stack<>();
-        int inOrder = Integer.MIN_VALUE;
-
-        while (root != null && !stack.isEmpty()) {
-            while (root != null) {
-                stack.add(root.getLeft());
-                root = root.getLeft();
-            }
-
-            root = stack.pop();
-            int val = root.getData();
-            if (val <= inOrder) {
-                return false;
-            }
-            inOrder = root.getData();
-            root = root.getRight();
-        }
-        return true;
-
-//        return false;
+        return false;
     }
-
 
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
@@ -117,56 +92,52 @@ public class Question010_IsValidBST {
      * @param root 根节点
      */
     private static boolean isValidBSTV2(TreeNode root) {
-        return helper(root, null, null);
+        return helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
     /**
-     * @param node  当前比较的节点
-     * @param lower 上层节点中的最小节点
-     * @param upper 上层节点中的最大节点
+     * 辅助方法
+     * 上下界记得使用Long类型，因为树节点存储的数据是Integer，
+     * 如果使用Integer.MAX_VALUE或者Integer.MIN_VALUE，在[2147483647]和[-2147483647]存在误判
      */
-    private static boolean helper(TreeNode node, Integer lower, Integer upper) {
+    private static boolean helper(TreeNode root, long lower, long upper) {
 
-        if (node == null)
+        // 一颗空树可以被认定为二叉搜索树
+        if (root == null) {
             return true;
+        }
 
-        int val = node.getData();
-
-        if (lower != null && val <= lower)
+        int val = root.val;
+        // 当前节点必须处在(lower,upper)开区间之内，否则这棵树就不是二叉搜索树
+        if (val <= lower || val >= upper) {
             return false;
+        }
 
-        if (upper != null && val >= upper)
-            return false;
-
-        if (!helper(node.getRight(), val, upper)) // 这么做其实是为了找从左子树中找到右子节点的值是否有大于根节点的
-            return false;
-
-        if (!helper(node.getLeft(), lower, val)) // 这么做其实是为了找从右子树中找到左子节点的值是否有小于根节点的
-            return false;
-
-        return true;
+        // 分别判断左右子节点是否合法
+        // 左子节点由于当前节点必定大于左子节点，因此左子节点的开区间变为(lower,root.val)
+        // 右子节点由于当前节点必定小于右子节点，因此右子节点的开区间变为(root.val,upper)
+        return helper(root.left, lower, val) && helper(root.right, val, upper);
     }
 
     public static void main(String[] args) {
 
-        TreeNode node1 = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
-        TreeNode node5 = new TreeNode(5);
-        TreeNode node6 = new TreeNode(6);
-        TreeNode node7 = new TreeNode(7);
+        TreeNode root1 = TreeUtil.createBinaryTreeByArray(new Integer[]{2, 1, 3}, 0);
+        TreeNode root2 = TreeUtil.createBinaryTreeByArray(new Integer[]{-2147483648}, 0);
+        TreeNode root3 = TreeUtil.createBinaryTreeByArray(new Integer[]{2147483647}, 0);
+        TreeNode root4 = TreeUtil.createBinaryTreeByArray(new Integer[]{5, 1, 4, null, null, 3, 6}, 0);
 
-        node4.setLeft(node2); // 根节点
-        node4.setRight(node6);
-        node2.setLeft(node1);
-        node2.setRight(node3);
-        node6.setLeft(node5);
-        node6.setRight(node7);
+        System.out.println("你的答案:");
+        System.out.println("[2,1,3]是二叉搜索树，验证结果:" + myIsValidBST(root1));
+        System.out.println("[-2147483648]是二叉搜索树，验证结果:" + myIsValidBST(root2));
+        System.out.println("[2147483647]是二叉搜索树，验证结果:" + myIsValidBST(root3));
+        System.out.println("[5,1,4,null,null,3,6]是二叉搜索树，验证结果:" + myIsValidBST(root4));
 
-        System.out.println("[2,1,3]是二叉搜索树，验证结果:" + isValidBSTV1(node4));
-        System.out.println("[2,1,3]是二叉搜索树，验证结果:" + isValidBSTV2(node4));
-        System.out.println("-------->");
-        System.out.println("[2,1,3]是二叉搜索树，验证结果:" + myIsValidBST(node4));
+        System.out.println("-------------------->");
+
+        System.out.println("正确答案:");
+        System.out.println("[2,1,3]是二叉搜索树，验证结果:" + isValidBSTV1(root1));
+        System.out.println("[-2147483648]是二叉搜索树，验证结果:" + isValidBSTV2(root2));
+        System.out.println("[2147483647]是二叉搜索树，验证结果:" + isValidBSTV2(root3));
+        System.out.println("[5,1,4,null,null,3,6]是二叉搜索树，验证结果:" + isValidBSTV2(root4));
     }
 }
