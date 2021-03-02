@@ -95,7 +95,7 @@ public class Question013_BinaryTreeLevelOrder {
             levels.add(new ArrayList<Integer>());
 
         // fulfil the current level
-        levels.get(level).add(node.data);
+        levels.get(level).add(node.val);
 
         // process child nodes for the next level
         if (node.left != null)
@@ -160,7 +160,7 @@ public class Question013_BinaryTreeLevelOrder {
             // 遍历当前二叉树的一层节点，并将下一层节点存入队列中，以便外层循环开始下一轮循环
             for (int i = 0; i < len; i++) {
                 TreeNode node = queue.poll();
-                cur.add(node.data);
+                cur.add(node.val);
                 if (node.left != null) {
                     queue.add(node.left);
                 }

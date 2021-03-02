@@ -86,7 +86,7 @@ public class Question052_MaxDepthBinaryTreeV2 {
                     TreeNode curNode = root;
                     while (true) {
                         // 要添加的节点 <= 当前节点，添加到左子树中
-                        if (curNode.data >= num) {
+                        if (curNode.val >= num) {
                             // 不存在左子节点，直接挂到当前节点左边
                             if (curNode.left == null) {
                                 curNode.left = newNode;

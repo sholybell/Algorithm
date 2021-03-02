@@ -2,7 +2,7 @@ package com.holybell.algorithm.common;
 
 public class TreeNode {
 
-    public int data;
+    public int val;
 
     public TreeNode left;
     public TreeNode right;
@@ -10,11 +10,11 @@ public class TreeNode {
     public int rightMaxDistance; // 右子树距离根节点的最大距离
 
     public int getData() {
-        return data;
+        return val;
     }
 
     public void setData(int data) {
-        this.data = data;
+        this.val = val;
     }
 
     public TreeNode getLeft() {
@@ -54,12 +54,12 @@ public class TreeNode {
     }
 
     public TreeNode(int data) {
-        this.data = data;
+        this.val = val;
     }
 
-    public TreeNode(int data, TreeNode left, TreeNode right) {
-          this.data = data;
-          this.left = left;
-          this.right = right;
-      }
+    public TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
 }

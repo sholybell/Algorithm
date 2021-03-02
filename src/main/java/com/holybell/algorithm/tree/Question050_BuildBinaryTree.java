@@ -149,7 +149,7 @@ public class Question050_BuildBinaryTree {
                 TreeNode newNode = new TreeNode(data);
                 TreeNode curNode = root;
                 while (true) {
-                    if (curNode.data >= data) { // 当前节点大于等于目标数字
+                    if (curNode.val >= data) { // 当前节点大于等于目标数字
                         if (curNode.left == null) {
                             curNode.left = newNode;  // 如果不存在左子节点，那么直接放如目标数字
                             return;
@@ -182,7 +182,7 @@ public class Question050_BuildBinaryTree {
          */
         private void preOrder(TreeNode node) {
             if (node != null) {
-                System.out.print(node.data + " ");
+                System.out.print(node.val + " ");
                 preOrder(node.left);
                 preOrder(node.right);
             }
@@ -204,7 +204,7 @@ public class Question050_BuildBinaryTree {
         private void inOrder(TreeNode node) {
             if (node != null) {
                 inOrder(node.left);
-                System.out.print(node.data + " ");
+                System.out.print(node.val + " ");
                 inOrder(node.right);
             }
         }
@@ -220,7 +220,7 @@ public class Question050_BuildBinaryTree {
             if (node != null) {
                 postOrder(node.left);
                 postOrder(node.right);
-                System.out.print(node.data + " ");
+                System.out.print(node.val + " ");
             }
         }
 
@@ -236,7 +236,7 @@ public class Question050_BuildBinaryTree {
             while (!queue.isEmpty()) {
                 // 弹出队列中的第一个节点
                 TreeNode curNode = queue.poll();
-                System.out.print(curNode.data + " ");
+                System.out.print(curNode.val + " ");
                 if (curNode.left != null) {
                     queue.add(curNode.left);
                 }

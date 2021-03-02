@@ -74,11 +74,11 @@ public class Question051_LowestCommonAncestor {
     private static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
         // 当前节点值
-        int curVal = root.data;
+        int curVal = root.val;
         // 节点p的值
-        int pVal = p.data;
+        int pVal = p.val;
         // 节点q的值
-        int qVal = q.data;
+        int qVal = q.val;
 
 
         if (pVal > curVal && qVal > curVal) {   // 节点p和节点q的值都比当前节点大
@@ -113,12 +113,12 @@ public class Question051_LowestCommonAncestor {
         node8.left = node7;
         node8.right = node9;
 
-        System.out.println("正确答案:" + lowestCommonAncestor(node6, node2, node4).data);
-        System.out.println("正确答案:" + lowestCommonAncestor(node6, node2, node8).data);
+        System.out.println("正确答案:" + lowestCommonAncestor(node6, node2, node4).val);
+        System.out.println("正确答案:" + lowestCommonAncestor(node6, node2, node8).val);
 
         System.out.println("--------------->");
 
-        System.out.println("本次答案:" + myLowestCommonAncestor(node6, node2, node4).data);
-        System.out.println("本次答案:" + myLowestCommonAncestor(node6, node2, node8).data);
+        System.out.println("本次答案:" + myLowestCommonAncestor(node6, node2, node4).val);
+        System.out.println("本次答案:" + myLowestCommonAncestor(node6, node2, node8).val);
     }
 }
