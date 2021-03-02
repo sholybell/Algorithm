@@ -101,7 +101,7 @@ public class LeetCode235_LowestCommonAncestor {
 
         // 记录每一个节点的父节点信息
         Map<TreeNode, TreeNode> parentMap = new HashMap<>();
-        while (!queue.isEmpty()) {
+        while (!parentMap.containsKey(p) || !parentMap.containsKey(q)) {
             TreeNode node = queue.poll();
             if (node.left != null) {
                 parentMap.put(node.left, node);
