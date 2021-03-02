@@ -13,7 +13,7 @@ public class TreeNode {
         return val;
     }
 
-    public void setData(int data) {
+    public void setData(int val) {
         this.val = val;
     }
 
@@ -53,7 +53,7 @@ public class TreeNode {
 
     }
 
-    public TreeNode(int data) {
+    public TreeNode(int val) {
         this.val = val;
     }
 
