@@ -2,6 +2,7 @@ package com.holybell.algorithm.tree;
 
 
 import com.holybell.algorithm.common.TreeNode;
+import com.holybell.algorithm.common.util.TreeUtil;
 
 import java.util.*;
 
@@ -15,16 +16,14 @@ import java.util.*;
  * <p>
  * https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/
  */
-public class Question011_LowestCommonAncestor {
+public class LeetCode236_LowestCommonAncestor {
 
     private static TreeNode ans;
 
 
     private static TreeNode myLowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-
-        return new TreeNode(Integer.MIN_VALUE);
+        return null;
     }
-
 
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
@@ -84,10 +83,10 @@ public class Question011_LowestCommonAncestor {
         }
 
         // Left Recursion. If left recursion returns true, set left = 1 else 0
-        int left = recurseTree(currentNode.getLeft(), p, q) ? 1 : 0;
+        int left = recurseTree(currentNode.left, p, q) ? 1 : 0;
 
         // Right Recursion
-        int right = recurseTree(currentNode.getRight(), p, q) ? 1 : 0;
+        int right = recurseTree(currentNode.right, p, q) ? 1 : 0;
 
         // If the current node is one of p or q
         int mid = (currentNode == p || currentNode == q) ? 1 : 0;
@@ -113,12 +112,19 @@ public class Question011_LowestCommonAncestor {
      * 使用一个Map缓存每个节点的父节点信息，
      * 将P或者Q其中一个节点的所有父节点都缓存到另一个Set集合中，
      * 然后从下往上遍历另一个节点的父节点是否在Set集合中
+     * <p>
+     * 本题解法思路和{@link LeetCode235_LowestCommonAncestor#lowestCommonAncestorV1(TreeNode, TreeNode, TreeNode)}
      *
      * @param root 根节点
      * @param p    节点P
      * @param q    节点Q
      */
     private static TreeNode lowestCommonAncestorV2(TreeNode root, TreeNode p, TreeNode q) {
+
+        // 如果根节点为null或者q、p之一，直接返回根节点
+        if (root == null || p == root || q == root) {
+            return root;
+        }
 
         // Stack for tree traversal
         // 这个可以是stack，可以是queue，可以是deque，这里并没有先后顺序的考虑，只是存储下一个要解析子节点的节点
@@ -136,13 +142,13 @@ public class Question011_LowestCommonAncestor {
             TreeNode node = stack.pop();
 
             // While traversing the tree, keep saving the parent pointers.
-            if (node.getLeft() != null) {
-                parent.put(node.getLeft(), node);
-                stack.push(node.getLeft());
+            if (node.left != null) {
+                parent.put(node.left, node);
+                stack.push(node.left);
             }
-            if (node.getRight() != null) {
-                parent.put(node.getRight(), node);
-                stack.push(node.getRight());
+            if (node.right != null) {
+                parent.put(node.right, node);
+                stack.push(node.right);
             }
         }
 
@@ -183,15 +189,17 @@ public class Question011_LowestCommonAncestor {
         node1.setLeft(node0);
         node1.setRight(node8);
 
-        System.out.println("Correct Answer is 3 :" + lowestCommonAncestorV1(node3, node5, node1).getData());
-        System.out.println("Correct Answer is 5 :" + lowestCommonAncestorV1(node3, node5, node4).getData());
-        System.out.println("Correct Answer is 3 :" + lowestCommonAncestorV2(node3, node5, node1).getData());
-        System.out.println("Correct Answer is 5 :" + lowestCommonAncestorV2(node3, node5, node4).getData());
+        System.out.println("二叉树如下:");
+        TreeUtil.show(node3);
 
+        System.out.println("你的答案:");
+        System.out.println("Correct Answer is 3 :" + myLowestCommonAncestor(node3, node5, node1).val);
+        System.out.println("Correct Answer is 5 :" + myLowestCommonAncestor(node3, node5, node4).val);
         System.out.println("----------------->");
-
-        System.out.println("Correct Answer is 3 :" + myLowestCommonAncestor(node3, node5, node1).getData());
-        System.out.println("Correct Answer is 5 :" + myLowestCommonAncestor(node3, node5, node4).getData());
-
+        System.out.println("正确答案:");
+        System.out.println("Correct Answer is 3 :" + lowestCommonAncestorV1(node3, node5, node1).val);
+        System.out.println("Correct Answer is 5 :" + lowestCommonAncestorV1(node3, node5, node4).val);
+        System.out.println("Correct Answer is 3 :" + lowestCommonAncestorV2(node3, node5, node1).val);
+        System.out.println("Correct Answer is 5 :" + lowestCommonAncestorV2(node3, node5, node4).val);
     }
 }
