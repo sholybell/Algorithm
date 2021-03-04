@@ -97,20 +97,29 @@ public class LeetCode102_levelOrder {
      */
     private static List<List<Integer>> levelOrder(TreeNode root) {
 
+        // 如果是空的二叉树，直接返回
         if (root == null) {
             return new ArrayList<>();
         }
 
+        // 缓存最终层序遍历得列表
         List<List<Integer>> ans = new ArrayList<>();
+        // 使用一个队列保存需要遍历的节点
         Queue<TreeNode> queue = new LinkedList<>();
-
+        // 添加第一层节点，即根节点
         queue.offer(root);
+
+        // 每一次循环输出一层
         while (!queue.isEmpty()) {
+            // 获取当前层需要获取几个元素
             int n = queue.size();
+            // 保存本层遍历的节点
             List<Integer> layer = new LinkedList<>();
+            // 根据前面获取的本层数量输出队列中的元素
             for (int i = 0; i < n; i++) {
                 TreeNode node = queue.poll();
                 layer.add(node.val);
+                // 判断队列弹出的节点，是否存在左右子节点，若存在加入度列，作为下一层循环遍历的节点使用
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
@@ -130,6 +139,7 @@ public class LeetCode102_levelOrder {
         System.out.println("你的答案:");
         System.out.println("二叉树1层序遍历:" + ListUtil.printNestedList(myLevelOrder(root1)));
         System.out.println("空树层序遍历:" + ListUtil.printNestedList(myLevelOrder(null)));
+        System.out.println("---------------------------------------------->");
         System.out.println("正确答案:");
         System.out.println("二叉树1层序遍历:" + ListUtil.printNestedList(levelOrder(root1)));
         System.out.println("空树层序遍历:" + ListUtil.printNestedList(levelOrder(null)));
