@@ -2,7 +2,9 @@ package com.holybell.algorithm.common.util;
 
 import com.holybell.algorithm.common.ListNode;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ListUtil {
@@ -83,6 +85,20 @@ public class ListUtil {
             node = node.next;
         }
         sb.append("NULL");
+        return sb.toString();
+    }
+
+    public static <E> String printNestedList(List<List<E>> list) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < list.size(); i++) {
+            List<E> eList = list.get(i);
+            if (i != list.size() - 1) {
+                sb.append(Arrays.toString(eList.toArray())).append(",");
+            } else {
+                sb.append(Arrays.toString(eList.toArray()));
+            }
+        }
+        sb.append("]");
         return sb.toString();
     }
 }
