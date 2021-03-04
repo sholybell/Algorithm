@@ -141,7 +141,7 @@ public class LeetCode111_minDepth {
             return 1;
         }
 
-        // 重置深度(这个操作要放在上面两个操作之后，否则minDepth返回将会是整型最大值)
+        // 重置深度
         minDepth = Integer.MAX_VALUE;
 
         dfs(root, 1);
