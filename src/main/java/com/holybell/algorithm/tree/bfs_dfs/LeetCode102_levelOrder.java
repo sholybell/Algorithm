@@ -1,4 +1,4 @@
-package com.holybell.algorithm.tree.bfs;
+package com.holybell.algorithm.tree.bfs_dfs;
 
 import com.holybell.algorithm.common.TreeNode;
 import com.holybell.algorithm.common.util.ListUtil;

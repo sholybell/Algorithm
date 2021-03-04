@@ -1,4 +1,4 @@
-package com.holybell.algorithm.tree.bfs;
+package com.holybell.algorithm.tree.bfs_dfs;
 
 import com.holybell.algorithm.common.TreeNode;
 import com.holybell.algorithm.common.util.TreeUtil;
@@ -27,7 +27,7 @@ import java.util.Queue;
  */
 public class LeetCode111_minDepth {
 
-    private static int _minDepth(TreeNode root) {
+    private static int myMinDepth(TreeNode root) {
         return -1;
     }
 
@@ -67,12 +67,12 @@ public class LeetCode111_minDepth {
     // --------------------------------------------------------------------
 
     /**
-     * 计算一颗二叉树的最小深度
+     * 计算一颗二叉树的最小深度(BFS)
      *
      * @param root 二叉树根节点
      * @return 二叉树最小深度
      */
-    private static int minDepth(TreeNode root) {
+    private static int minDepthV1(TreeNode root) {
 
         // 根节点为null，深度为0
         if (root == null) {
@@ -124,15 +124,64 @@ public class LeetCode111_minDepth {
         return -1;
     }
 
+    // --------------------------------------------------------------------
+
+    private static int minDepth = Integer.MAX_VALUE;
+
+    /**
+     * 计算一颗二叉树的最小深度(DFS)
+     */
+    private static int minDepthV2(TreeNode root) {
+
+        if (root == null) {
+            return 0;
+        }
+
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+
+        // 重置深度(这个操作要放在上面两个操作之后，否则minDepth返回将会是整型最大值)
+        minDepth = Integer.MAX_VALUE;
+
+        dfs(root, 1);
+
+        return minDepth;
+    }
+
+    private static void dfs(TreeNode node, int depth) {
+
+        if (node.left == null && node.right == null) {
+            // minDepth默认值为整型最大值，从每个叶子节点中取所有叶子节点中最小的深度
+            minDepth = Math.min(minDepth, depth);
+            return;
+        }
+
+        // 解析遍历当前节点的下一层节点
+        if (node.left != null) {
+            dfs(node.left, depth + 1);      // depth不要使用自增操作，否则将影响下面判断如果符合，则depth被改动
+        }
+
+        if (node.right != null) {
+            dfs(node.right, depth + 1);
+        }
+    }
+
     public static void main(String[] args) {
-        TreeNode root = TreeUtil.createBinaryTreeByArray(new Integer[]{2, null, 3, null, 4, null, 5, null, 6}, 0);
-        System.out.println("二叉树如下:");
-        TreeUtil.show(root);
-        System.out.println("-------------------------------->");
+        TreeNode root1 = TreeUtil.createBinaryTreeByArray(new Integer[]{2, null, 3, null, 4, null, 5, null, 6}, 0);
+        TreeNode root2 = TreeUtil.createBinaryTreeByArray(new Integer[]{3, 9, 20, null, null, 15, 7}, 0);
+        System.out.println("二叉树1如下:");
+        TreeUtil.show(root1);
+        System.out.println("二叉树2如下:");
+        TreeUtil.show(root2);
         System.out.println("你的答案:");
-        System.out.println(_minDepth(root));
+        System.out.println("二叉树1最小深度:" + myMinDepth(root1));
+        System.out.println("二叉树2最小深度:" + myMinDepth(root2));
+        System.out.println("空树最小深度:" + myMinDepth(null));
         System.out.println("-------------------------------->");
         System.out.println("正确答案:");
-        System.out.println(minDepth(root));
+        System.out.println("二叉树1最小深度:" + minDepthV1(root1));
+        System.out.println("二叉树2最小深度:" + minDepthV2(root2));
+        System.out.println("空树最小深度:" + minDepthV2(null));
     }
 }
