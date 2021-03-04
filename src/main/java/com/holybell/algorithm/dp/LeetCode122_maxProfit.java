@@ -85,7 +85,7 @@ public class LeetCode122_maxProfit {
      *
      * @param prices 股价数组
      */
-    private static int maxProfit(int[] prices) {
+    private static int maxProfitV1(int[] prices) {
         // 数组非法，直接返回0
         if (prices == null || prices.length == 0) {
             return 0;
@@ -119,10 +119,74 @@ public class LeetCode122_maxProfit {
         return dp[prices.length - 1][0];
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * 贪心算法
+     * 由于每日可以买入卖出各一次，那么只要保证今日比昨日的收益更高，那么便采纳这笔交易
+     */
+    private static int maxProfitV2(int[] prices) {
+        int ans = 0;
+        for (int i = 1; i < prices.length; i++) {
+            // 若发现本日的价格高于昨日价格，就采用这笔价格，这时候收益要大于0
+            ans += Math.max(0, prices[i] - prices[i - 1]);
+        }
+        return ans;
+    }
+
+    // --------------------------------------------------------------------
+
+    private static int ans;
+
+    /**
+     * DFS操作，本操作用于扩宽思路，此解法超时
+     */
+    private static int maxProfitV3(int[] prices) {
+
+        // 数组长度小于2个，都不够完成一次交易
+        if (prices.length < 2) {
+            return 0;
+        }
+        ans = 0;
+
+        dfs(prices, 0, 0, 0);
+        return ans;
+    }
+
+    /**
+     * @param prices 股票行情数组
+     * @param day    操作日
+     * @param status 当日是否持有股票， 0 未持有  1 持有
+     * @param profit 目前收益
+     */
+    private static void dfs(int[] prices, int day, int status, int profit) {
+
+        // 如果当前天数达到数组长度，直接返回，因为最大交易次数就是 n-1次
+        if (prices.length == day) {
+            ans = Math.max(ans, profit);
+            return;
+        }
+
+        // 今日的有两种选择，①操作买卖（持有卖出，未持有买入），② 保持前日状态不操作
+
+        // 本日不操作，将状态传递到下一日
+        dfs(prices, day + 1, status, profit);
+
+        // 进行买卖
+        if (status == 1) {
+            // 原本持有股票，卖出，盈利加上今日股票面值
+            dfs(prices, day + 1, 0, profit + prices[day]);
+        } else {
+            // 原本未持有股票，买入，另一扣除今日股票面值
+            dfs(prices, day + 1, 1, profit - prices[day]);
+        }
+    }
+
     public static void main(String[] args) {
         int[] stocks = new int[]{7, 1, 5, 3, 6, 4};
         System.out.println("你的答案:" + _maxProfit(stocks));
         System.out.println("--------------------->");
-        System.out.println("正确答案:" + maxProfit(stocks));
+        System.out.println("正确答案:" + maxProfitV1(stocks));
+        System.out.println("正确答案:" + maxProfitV3(stocks));
     }
 }
