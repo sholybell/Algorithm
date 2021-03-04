@@ -94,8 +94,10 @@ public class LeetCode102_levelOrder {
 
     /**
      * BFS
+     * <p>
+     * 由于二叉树不存在环，因此不需要一个额外的visited集合记录遍历过的节点
      */
-    private static List<List<Integer>> levelOrder(TreeNode root) {
+    private static List<List<Integer>> levelOrderV1(TreeNode root) {
 
         // 如果是空的二叉树，直接返回
         if (root == null) {
@@ -132,6 +134,37 @@ public class LeetCode102_levelOrder {
         return ans;
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * DFS
+     */
+    private static List<List<Integer>> levelOrderV2(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        dfs(root, ans, 0);
+        return ans;
+    }
+
+    private static void dfs(TreeNode node, List<List<Integer>> ans, int level) {
+
+        //  当前节点为空，直接返回
+        if (node == null) {
+            return;
+        }
+
+        // 由于level从0开始，如果ans成员数量刚好等于level，那么说明ans需要再补充一个集合
+        if (ans.size() == level) {
+            ans.add(new ArrayList<>());
+        }
+
+        // 将遍历的节点添加到相应层数的集合中
+        ans.get(level).add(node.val);
+
+        // 继续递归遍历左右子节点，层数+1
+        dfs(node.left, ans, level + 1);
+        dfs(node.right, ans, level + 1);
+    }
+
     public static void main(String[] args) {
         TreeNode root1 = TreeUtil.createBinaryTreeByArray(new Integer[]{3, 9, 20, null, null, 15, 7}, 0);
         System.out.println("二叉树1如下:");
@@ -141,8 +174,8 @@ public class LeetCode102_levelOrder {
         System.out.println("空树层序遍历:" + ListUtil.printNestedList(myLevelOrder(null)));
         System.out.println("---------------------------------------------->");
         System.out.println("正确答案:");
-        System.out.println("二叉树1层序遍历:" + ListUtil.printNestedList(levelOrder(root1)));
-        System.out.println("空树层序遍历:" + ListUtil.printNestedList(levelOrder(null)));
+        System.out.println("二叉树1层序遍历:" + ListUtil.printNestedList(levelOrderV2(root1)));
+        System.out.println("空树层序遍历:" + ListUtil.printNestedList(levelOrderV1(null)));
 
     }
 }
