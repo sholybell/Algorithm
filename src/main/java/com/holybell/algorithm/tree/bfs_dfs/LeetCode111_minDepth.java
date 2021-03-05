@@ -167,6 +167,25 @@ public class LeetCode111_minDepth {
         }
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * 同为DFS算法，不需要额外的全局变量
+     */
+    private static int minDepthV3(TreeNode root) {
+
+        if (root == null) {
+            return 0;
+        }
+
+        int left = minDepthV3(root.left);
+        int right = minDepthV3(root.right);
+
+        // 切记，最小深度是根节点到达叶子节点最短的距离，而叶子节点是左右子树都为0的节点
+        // 因此，如果某个节点左右子树有一个为0，以该节点为起始位置的最小深度应该选择非空子节点那边的子树深度+1，否则就是没有叶子节点，深度为1
+        return (left == 0 || right == 0) ? (left + right + 1) : Math.min(left, right) + 1;
+    }
+
     public static void main(String[] args) {
         TreeNode root1 = TreeUtil.createBinaryTreeByArray(new Integer[]{2, null, 3, null, 4, null, 5, null, 6}, 0);
         TreeNode root2 = TreeUtil.createBinaryTreeByArray(new Integer[]{3, 9, 20, null, null, 15, 7}, 0);
