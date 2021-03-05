@@ -1,4 +1,4 @@
-package com.holybell.algorithm.other;
+package com.holybell.algorithm.backtrack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * <p>
  * 链接：https://leetcode-cn.com/problems/generate-parentheses
  */
-public class Question016_GenerateParenthesis {
+public class LeetCode22_generateParenthesis {
 
     /**
      * 给定n对括号，求有效的括号组合
@@ -22,19 +22,7 @@ public class Question016_GenerateParenthesis {
      * @param n 括号对数
      */
     private static List<String> myGenerateParenthesis(int n) {
-
-        return null;
-    }
-
-    /**
-     * @param ans   输出结果集合
-     * @param cur   当前的组合字符串
-     * @param open  左括号使用数量
-     * @param close 右括号使用数量
-     * @param max   最大括号对数
-     */
-    private static void myBacktrack(List<String> ans, String cur, int open, int close, int max) {
-
+        return new ArrayList<>();
     }
 
     // --------------------------------------------------------------------
@@ -64,17 +52,65 @@ public class Question016_GenerateParenthesis {
 
     /**
      * 给定n对括号，求有效的括号组合
+     * <p>
+     * 直接穷举所有的排列组合，再重头遍历每个组合遇到(则+1，遇到)则-1，小于0或者最终不为0，为错误的排列
      *
      * @param n 括号对数
      */
-    private static List<String> generateParenthesis(int n) {
+    private static List<String> generateParenthesisV1(int n) {
+        List<String> ans = new ArrayList<>();
+        helper(new char[2 * n], ans, 0);
+        return ans;
+    }
+
+    private static void helper(char[] chars, List<String> ans, int pos) {
+
+        if (pos == chars.length) {
+            if (valid(chars)) {
+                ans.add(new String(chars));
+            }
+            return;
+        }
+
+        chars[pos] = '(';
+        helper(chars, ans, pos + 1);
+        chars[pos] = ')';
+        helper(chars, ans, pos + 1);
+    }
+
+    private static boolean valid(char[] chars) {
+        int count = 0;
+        for (char ch : chars) {
+            if (ch == '(') {
+                count++;
+            }
+            if (ch == ')') {
+                count--;
+            }
+            if (count < 0) {
+                return false;
+            }
+        }
+        return count == 0;
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * 给定n对括号，求有效的括号组合
+     * <p>
+     * 回溯法，每个位置能放置的情况如下:①左括号小于给定括号数量 ②右括号小于左括号个数
+     *
+     * @param n 括号对数
+     */
+    private static List<String> generateParenthesisV2(int n) {
         List<String> result = new ArrayList<>(n);
 
         if (n <= 0) {
             return result;
         }
 
-        myBacktrack(result, "", 0, 0, n);
+        backtrack(result, "", 0, 0, n);
         return result;
     }
 
@@ -99,9 +135,11 @@ public class Question016_GenerateParenthesis {
     }
 
     public static void main(String[] args) {
-        System.out.println("正确答案：" + generateParenthesis(3));
+        System.out.println("你的答案:");
+        System.out.println("3对括号的组成:" + myGenerateParenthesis(3));
         System.out.println("----------------->");
-        System.out.println("本次解答：" + myGenerateParenthesis(3));
+        System.out.println("正确答案:");
+        System.out.println("3对括号的组成:" + generateParenthesisV1(3));
     }
 
 }
