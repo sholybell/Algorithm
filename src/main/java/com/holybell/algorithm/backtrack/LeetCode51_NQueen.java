@@ -1,4 +1,6 @@
-package com.holybell.algorithm.board;
+package com.holybell.algorithm.backtrack;
+
+import com.holybell.algorithm.common.util.ListUtil;
 
 import java.util.*;
 
@@ -15,8 +17,8 @@ import java.util.*;
  */
 public class LeetCode51_NQueen {
 
-    private static List<List<String>> _solveNQueens(int n) {
-        return null;
+    private static List<List<String>> mySolveNQueens(int n) {
+        return new ArrayList<>();
     }
 
     // --------------------------------------------------------------------
@@ -82,35 +84,35 @@ public class LeetCode51_NQueen {
      */
     private static void backtrack(List<List<String>> result, int[] queens, int n, int row, Set<Integer> columns, Set<Integer> diagonals1, Set<Integer> diagonals2) {
         // 当前已经将列填满,登记一种解法
-        if (columns.size() == n) {
+        if (row == n) {
             result.add(genSingleResult(queens, n));
         } else {
             // N皇后问题其实是放在一个正方形棋盘，通过循环判断在当前行应该放在哪一列
-            for (int i = 0; i < n; i++) {
+            for (int col = 0; col < n; col++) {
                 // 判断该列是否被其他行占据
-                if (columns.contains(i)) {
+                if (columns.contains(col)) {
                     continue;
                 }
                 // 判断对角线1是否被其他行占据
-                int diag1 = row - i;
+                int diag1 = row - col;
                 if (diagonals1.contains(diag1)) {
                     continue;
                 }
                 // 判断对角线2是否被其他行占据
-                int diag2 = row + i;
+                int diag2 = row + col;
                 if (diagonals2.contains(diag2)) {
                     continue;
                 }
                 // 以上判断都通过，说明当前行当前列是可以放置N皇后的，标记占据状态
-                queens[row] = i;
-                columns.add(i);
+                queens[row] = col;
+                columns.add(col);
                 diagonals1.add(diag1);
                 diagonals2.add(diag2);
                 // 开始计算下一行的可能性
                 backtrack(result, queens, n, row + 1, columns, diagonals1, diagonals2);
                 // 回溯算法本质，清除上面的占据状态
                 queens[row] = -1;
-                columns.remove(i);
+                columns.remove(col);
                 diagonals1.remove(diag1);
                 diagonals2.remove(diag2);
             }
@@ -137,17 +139,11 @@ public class LeetCode51_NQueen {
     }
 
     public static void main(String[] args) {
-        System.out.println("你的解答:");
-        List<List<String>> resultList = Optional.ofNullable(_solveNQueens(4)).orElse(new ArrayList<>());
-        for (List<String> list : resultList) {
-            System.out.println(Arrays.toString(list.toArray()));
-        }
+        List<List<String>> resultList = Optional.ofNullable(mySolveNQueens(4)).orElse(new ArrayList<>());
+        System.out.println("你的解答:" + ListUtil.printNestedList(resultList));
         System.out.println("--------------------->");
-        System.out.println("正确解答:");
         resultList = solveNQueens(4);
-        for (List<String> list : resultList) {
-            System.out.println(Arrays.toString(list.toArray()));
-        }
+        System.out.println("正确解答:" + ListUtil.printNestedList(resultList));
     }
 
 }
