@@ -1,6 +1,11 @@
 package com.holybell.algorithm.board.dfs;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
+ * 难度:中等
+ * <p>
  * 有 n 个城市，其中一些彼此相连，另一些没有相连。
  * 如果城市 a 与城市 b 直接相连，且城市 b 与城市 c 直接相连，那么城市 a 与城市 c 间接相连。
  * <p>
