@@ -1,18 +1,31 @@
-package com.holybell.algorithm.math;
+package com.holybell.algorithm.binarysearch;
 
 
 /**
  * 难度：简单
  * <p>
- * 实现 int sqrt(int x) 函数。
+ * 实现 int sqrt(int x) 函数。
  * <p>
- * 计算并返回 x 的平方根，其中 x 是非负整数。
+ * 计算并返回 x 的平方根，其中 x 是非负整数。
  * <p>
  * 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
  * <p>
- * 链接：https://leetcode-cn.com/problems/sqrtx
+ * 示例 1:
+ * <p>
+ * 输入: 4
+ * 输出: 2
+ * <p>
+ * <p>
+ * 示例 2:
+ * <p>
+ * 输入: 8
+ * 输出: 2
+ * 说明: 8 的平方根是 2.82842...,
+ *      由于返回类型是整数，小数部分将被舍去。
+ * <p>
+ * Related Topics 数学 二分查找
  */
-public class Question021_Sqrt {
+public class LeetCode69_sqrt {
 
     /**
      * 求一个非负整数开根号
@@ -24,8 +37,6 @@ public class Question021_Sqrt {
      * @param x 非负整数
      */
     private static int mySqrt(int x) {
-
-
         return -1;
     }
 
@@ -71,30 +82,30 @@ public class Question021_Sqrt {
      * @param x 非负整数
      */
     private static int sqrt(int x) {
-
         if (x == 0 || x == 1) {
             return x;
         }
 
-        int left = 1, right = x;
+        long left = 0, right = x, ans = -1;
         while (left <= right) {
-            int mid = (left + right) / 2;
-            if (mid == x / mid) { // 避免溢出
-                return mid;
-            } else if (mid > x / mid) {
-                right = mid - 1;
-            } else {
+            long mid = left + (right - left) / 2;
+            // TODO 区别于正常的二分查找三个判断分支，由于开根号可能不为整数，本地仅要求返回整数，因此只需要判断段到最后一个整数的平方<=x即可
+            if (mid * mid <= x) {
+                ans = mid;
                 left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
-
-        return 0;
+        return (int) ans;
     }
 
 
     public static void main(String[] args) {
-        System.out.println("16平方根的值:" + sqrt(16));
+        System.out.println("你的答案:");
+        System.out.println("16平方根的值:" + mySqrt(8));
         System.out.println("------------------>");
-        System.out.println("16平方根的值:" + mySqrt(16));
+        System.out.println("正确答案:");
+        System.out.println("16平方根的值:" + sqrt(8));
     }
 }
