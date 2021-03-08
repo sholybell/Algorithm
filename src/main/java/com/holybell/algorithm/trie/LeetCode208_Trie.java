@@ -1,7 +1,7 @@
-package com.holybell.algorithm.tree;
+package com.holybell.algorithm.trie;
 
 /**
- * 难度：困难
+ * 难度:中等
  * <p>
  * 实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。
  * <p>
@@ -19,11 +19,9 @@ package com.holybell.algorithm.tree;
  * <p>
  * 链接：https://leetcode-cn.com/problems/implement-trie-prefix-tree
  */
-public class Question023_DictTree {
+public class LeetCode208_Trie {
 
     static class MyTrie {
-
-        private MyTrieNode root;
 
         public MyTrie() {
 
@@ -34,12 +32,11 @@ public class Question023_DictTree {
         }
 
         private MyTrieNode searchPrefix(String word) {
-            return null;
+           return null;
         }
 
         public boolean search(String word) {
             return false;
-
         }
 
         public boolean startsWith(String prefix) {
@@ -50,38 +47,7 @@ public class Question023_DictTree {
 
     static class MyTrieNode {
 
-        private MyTrieNode[] links;
-
-        private final int R = 26;
-
-        private boolean isEnd;
-
-        public MyTrieNode() {
-
-        }
-
-        public boolean containsKey(char ch) {
-            return false;
-        }
-
-
-        public MyTrieNode get(char ch) {
-            return null;
-        }
-
-        public void put(char ch, MyTrieNode node) {
-
-        }
-
-        public void setEnd() {
-
-        }
-
-        public boolean isEnd() {
-            return false;
-        }
     }
-
 
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
@@ -229,16 +195,7 @@ public class Question023_DictTree {
     public static void main(String[] args) {
         Trie trie = new Trie();
 
-        System.out.println("字典库输入:hello world apple");
-        trie.insert("apple");
-        trie.insert("world");
-        trie.insert("hello");
-        System.out.println("字典库中是否存在apple:  " + trie.search("apple"));
-        System.out.println("字典库中是否存在app:    " + trie.search("app"));
-        System.out.println("字典库中是否存在hell前缀:" + trie.startsWith("hell"));
-
-        System.out.println("------------------>");
-
+        System.out.println("你的答案:");
         MyTrie myTrie = new MyTrie();
         System.out.println("字典库输入:hello world apple");
         myTrie.insert("apple");
@@ -247,5 +204,18 @@ public class Question023_DictTree {
         System.out.println("字典库中是否存在apple:  " + myTrie.search("apple"));
         System.out.println("字典库中是否存在app:    " + myTrie.search("app"));
         System.out.println("字典库中是否存在hell前缀:" + myTrie.startsWith("hell"));
+
+        System.out.println("------------------>");
+
+        System.out.println("正确答案:");
+        System.out.println("字典库输入:hello world apple");
+        trie.insert("apple");
+        trie.insert("world");
+        trie.insert("hello");
+        System.out.println("字典库中是否存在apple:  " + trie.search("apple"));
+        System.out.println("字典库中是否存在app:    " + trie.search("app"));
+        System.out.println("字典库中是否存在hell前缀:" + trie.startsWith("hell"));
+
+
     }
 }
