@@ -9,5 +9,7 @@ public abstract class ArrayUtil {
         for (char[] row : board) {
             System.out.println(Arrays.toString(row));
         }
+        // 换行
+        System.out.println();
     }
 }
