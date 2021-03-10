@@ -1,4 +1,4 @@
-package com.holybell.algorithm.math;
+package com.holybell.algorithm.bit;
 
 
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import java.util.Arrays;
  * <p>
  * 链接：https://leetcode-cn.com/problems/counting-bits
  */
-public class Question025_CountBits {
+public class LeetCode338_countBits {
 
     /**
      * 由于Integer为固定长度32位，循环遍历一个整形数字为固定次数k，外层再循环一个num次，O(N)=O(k*num)
@@ -74,7 +74,7 @@ public class Question025_CountBits {
      *
      * @param num 非负整数
      */
-    private static int[] countBits(int num) {
+    private static int[] countBitsV1(int num) {
 
         if (num < 0) {
             return null;
@@ -93,10 +93,21 @@ public class Question025_CountBits {
         return bitCounts;
     }
 
+    // --------------------------------------------------------------------
+
+    private static int[] countBitsV2(int num) {
+        int[] bitCounts = new int[num + 1];
+        for (int i = 1; i <= num; i++) {
+            // TODO 每一个数字可以看做 前面某个数值*2 在加上0或者1获得，从而根据这个条件有以下递推公式
+            bitCounts[i] = bitCounts[i >> 1] + (i & 1);
+        }
+        return bitCounts;
+    }
+
     public static void main(String[] args) {
 
-        System.out.println("从0到2每个数字的二进制为1个数：" + Arrays.toString(countBits(2)));
-        System.out.println("从0到5每个数字的二进制为1个数：" + Arrays.toString(countBits(5)));
+        System.out.println("从0到2每个数字的二进制为1个数：" + Arrays.toString(countBitsV1(2)));
+        System.out.println("从0到5每个数字的二进制为1个数：" + Arrays.toString(countBitsV2(5)));
 
         System.out.println("-------------------------------->");
 
