@@ -12,4 +12,13 @@ public abstract class ArrayUtil {
         // 换行
         System.out.println();
     }
+
+    public static void printBoard(int[][] board) {
+        StringBuilder sb = new StringBuilder();
+        for (int[] row : board) {
+            System.out.println(Arrays.toString(row));
+        }
+        // 换行
+        System.out.println();
+    }
 }
