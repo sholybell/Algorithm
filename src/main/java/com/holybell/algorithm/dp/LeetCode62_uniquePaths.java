@@ -84,14 +84,25 @@ public class LeetCode62_uniquePaths {
      * 递归解法   本解法leetcode超时
      */
     private static int uniquePathsV1(int m, int n) {
-        return helper(0, 0, m, n);
+        int[][] cache = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                cache[i][j] = -1;
+            }
+        }
+
+        return helper(0, 0, m, n, cache);
     }
 
-    private static int helper(int row, int col, int m, int n) {
+    private static int helper(int row, int col, int m, int n, int[][] cache) {
 
         // 超出坐标返回0
         if (row >= m || col >= n) {
             return 0;
+        }
+
+        if (cache[row][col] != -1) {
+            return cache[row][col];
         }
 
         // 到达最后一个出口，返回可通过路径1
@@ -100,7 +111,9 @@ public class LeetCode62_uniquePaths {
         }
 
         // 每个点位都是可以为往下走、往右走，即往下走和往右走的路线合计为当前点位总路线
-        return helper(row + 1, col, m, n) + helper(row, col + 1, m, n);
+        int count = helper(row + 1, col, m, n, cache) + helper(row, col + 1, m, n, cache);
+        cache[row][col] = count;
+        return count;
     }
 
     // --------------------------------------------------------------------
