@@ -42,11 +42,9 @@ public class LeetCode120_minimumTotal {
      * 求一个三角形从底部走到顶部的最小路径
      */
     private static int myMinimumTotal(List<List<Integer>> triangle) {
-
         return -1;
     }
 
-
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
@@ -82,7 +80,10 @@ public class LeetCode120_minimumTotal {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    private static int minimumTotal(List<List<Integer>> triangle) {
+    /**
+     * 动态规划  从底向上
+     */
+    private static int minimumTotalV1(List<List<Integer>> triangle) {
         int row = triangle.size();
         // 保存每个节点到底层的最短路径
         int[] minlen = new int[row + 1];
@@ -100,6 +101,43 @@ public class LeetCode120_minimumTotal {
         return minlen[0];
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * 从顶向下
+     */
+    private static int minimumTotalV2(List<List<Integer>> triangle) {
+        int n = triangle.size();
+
+        // 记录从从顶点到每个节点的最小路径
+        int[][] minPath = new int[n][n];
+
+        // 第一行就一个节点，自己构成最小路径
+        minPath[0][0] = triangle.get(0).get(0);
+
+        // 循环遍历每一行
+        for (int i = 1; i < n; i++) {
+
+            // 每行左边界节点只有上一行的左边界才能下来
+            minPath[i][0] = minPath[i - 1][0] + triangle.get(i).get(0);
+
+            // 遍历每一行非左右边界节点，非边界节点最小路径： Math.min(minPath(i-1,j-1),minPath(i-1,j))+当前节点值
+            for (int j = 1; j < i; j++) {
+                minPath[i][j] = Math.min(minPath[i - 1][j - 1], minPath[i - 1][j]) + triangle.get(i).get(j);
+            }
+
+            // 每行的右边界只有上一行的右边界才能下来
+            minPath[i][i] = minPath[i - 1][i - 1] + triangle.get(i).get(i);
+        }
+
+        // 从最后一行的每个节点中找出最短路径那个
+        int min = minPath[n - 1][0];
+        for (int num : minPath[n - 1]) {
+            min = Math.min(min, num);
+        }
+        return min;
+    }
+
     public static void main(String[] args) {
         List<List<Integer>> list = Arrays.asList(
                 Arrays.asList(2),
@@ -110,6 +148,6 @@ public class LeetCode120_minimumTotal {
 
         System.out.println("你的解答:" + myMinimumTotal(list));
         System.out.println("------------------------------->");
-        System.out.println("正确答案:" + minimumTotal(list));
+        System.out.println("正确答案:" + minimumTotalV1(list));
     }
 }
