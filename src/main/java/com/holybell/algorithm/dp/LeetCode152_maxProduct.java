@@ -85,9 +85,9 @@ public class LeetCode152_maxProduct {
     public static void main(String[] args) {
         int[] nums = new int[]{2, 3, -2, 4};
         System.out.println("你的答案:");
-        System.out.println("数组 : " + Arrays.toString(nums) + " 最大子数组乘积 :" + myMaxProduct(nums));
+        System.out.println("数组 : " + Arrays.toString(nums) + " 最大子数组乘积 : " + myMaxProduct(nums));
         System.out.println("---------------------->");
         System.out.println("正确答案:");
-        System.out.println("数组 : " + Arrays.toString(nums) + " 最大子数组乘积 :" + maxProduct(nums));
+        System.out.println("数组 : " + Arrays.toString(nums) + " 最大子数组乘积 : " + maxProduct(nums));
     }
 }
