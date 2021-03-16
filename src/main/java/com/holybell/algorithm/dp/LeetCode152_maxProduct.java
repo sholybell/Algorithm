@@ -62,7 +62,7 @@ public class LeetCode152_maxProduct {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    private static int maxProduct(int[] nums) {
+    private static int maxProductV1(int[] nums) {
 
         int n = nums.length;
 
@@ -82,12 +82,52 @@ public class LeetCode152_maxProduct {
         return max;
     }
 
+    // --------------------------------------------------------------------
+
+    private static long max = Long.MIN_VALUE;
+
+    /**
+     * 递归解法
+     */
+    private static int maxProductV2(int[] nums) {
+
+        // 重置全局变量
+        max = Long.MIN_VALUE;
+
+        if (nums.length == 1) {
+            return nums[0];
+        }
+
+        helper(nums, 1, 0);
+        return (int) max;
+    }
+
+    private static void helper(int[] nums, long product, int pos) {
+        if (pos == nums.length) {
+            return;
+        }
+
+        long _product = product * nums[pos];
+        max = Math.max(Math.max(max, _product), nums[pos]);
+
+        // 当前元素加入上一批子序列
+        helper(nums, _product, pos + 1);
+        // 当前元素成为新的一批子序列的开始
+        helper(nums, nums[pos], pos + 1);
+    }
+
     public static void main(String[] args) {
-        int[] nums = new int[]{2, 3, -2, 4};
+        int[] nums1 = new int[]{2, 3, -2, 4};
+        int[] nums2 = new int[]{-2, 0, -1};
+        int[] nums3 = new int[]{0, -1, 4, -4, 5, -2, -1, -1, -2, -3, 0, -3, 0, 1, -1, -4, 4, 6, 2, 3, 0, -5, 2, 1, -4, -2, -1, 3, -4, -6, 0, 2, 2, -1, -5, 1, 1, 5, -6, 2, 1, -3, -6, -6, -3, 4, 0, -2, 0, 2};
         System.out.println("你的答案:");
-        System.out.println("数组 : " + Arrays.toString(nums) + " 最大子数组乘积 : " + myMaxProduct(nums));
+        System.out.println("数组 : " + Arrays.toString(nums1) + " 最大子数组乘积 : " + myMaxProduct(nums1));
+        System.out.println("数组 : " + Arrays.toString(nums2) + " 最大子数组乘积 : " + myMaxProduct(nums2));
+//        System.out.println("数组 : " + Arrays.toString(nums3) + " 最大子数组乘积 : " + myMaxProduct(nums3));
         System.out.println("---------------------->");
         System.out.println("正确答案:");
-        System.out.println("数组 : " + Arrays.toString(nums) + " 最大子数组乘积 : " + maxProduct(nums));
+        System.out.println("数组 : " + Arrays.toString(nums1) + " 最大子数组乘积 : " + maxProductV1(nums1));
+        System.out.println("数组 : " + Arrays.toString(nums2) + " 最大子数组乘积 : " + maxProductV1(nums2));
+//        System.out.println("数组 : " + Arrays.toString(nums3) + " 最大子数组乘积 : " + maxProduct(nums3));
     }
 }
