@@ -28,15 +28,18 @@ import java.util.Arrays;
  * 输入: [7,6,4,3,1]
  * 输出: 0
  * 解释: 在这个情况下, 没有交易完成, 所以最大利润为 0。
+ * <p>
+ * 1 <= prices.length <= 105
+ * 0 <= prices[i] <= 105
  */
-public class LeetCode123_maxProfit {
+public class LeetCode123_maxProfit3 {
 
     /**
      * 给定一个数组，数组每个元素表示某天股价，求给定一次买入卖出机会情况下，如何得到最大利润
      *
      * @param prices 股价数组
      */
-    private static int _maxProfit(int[] prices) {
+    private static int myMaxProfit(int[] prices) {
         return 0;
     }
 
@@ -77,54 +80,87 @@ public class LeetCode123_maxProfit {
 
     /**
      * 给定一个数组，数组每个元素表示某天股价，求给定一次买入卖出机会情况下，如何得到最大利润
-     * 联系{@link LeetCode121_maxProfit} 本题没有要求最大交易次数，121题要求只能交易一次
+     * 联系{@link LeetCode121_maxProfit1} 本题没有要求最大交易次数，121题要求只能交易一次
      *
      * @param prices 股价数组
      */
-    private static int maxProfit(int[] prices) {
-        // 数组非法，直接返回0
-        if (prices == null || prices.length == 0) {
+    private static int maxProfitV1(int[] prices) {
+
+        int n = prices.length;
+
+        if (n == 0 || n == 1) {
             return 0;
         }
 
-        int[][][] dp = new int[prices.length][3][2];
+        int[][][] dp = new int[n][2][3];
 
-        dp[0][0][0] = 0;
-        dp[0][0][1] = 0;
+        for (int i = 0; i < n; i++) {
+            // 先处理第三维度为0的情况
+            dp[i][0][0] = 0;
+            dp[i][1][0] = Integer.MIN_VALUE / 2;    // 不存在的交易直接给一个足够大的负数即可
 
-        dp[0][1][0] = 0;
-        dp[0][1][1] = 0;
-
-        dp[0][2][0] = 0;
-        dp[0][2][1] = 0;
-
-        for (int i = 1; i < prices.length; i++) {
-            for (int k = 1; k <= 2; k++) {
-                dp[i][k][0] = Math.max(dp[i - 1][k][0], dp[i - 1][k - 1][1] + prices[i]);
-                dp[i][k][1] = Math.max(dp[i - 1][k][1], dp[i - 1][k][0] - prices[i]);
+            for (int j = 1; j <= 2; j++) {
+                if (i == 0) {
+                    dp[0][0][j] = 0;            // 第0天未持有，买卖多少次都是0
+                    dp[0][1][j] = -prices[0];   // 第0天持有，买卖多少次，剩下的都只能是负的第一天的股价
+                } else {
+                    dp[i][0][j] = Math.max(dp[i - 1][0][j], dp[i - 1][1][j] + prices[i]);
+                    dp[i][1][j] = Math.max(dp[i - 1][1][j], dp[i - 1][0][j - 1] - prices[i]);   // TODO 买入算一次交易，因此上一天只能是j-1次交易
+                }
             }
         }
-        return dp[prices.length - 1][2][0];
 
-//        int max_k = 2;
-//        int n = prices.length;
-//        int[][][] dp = new int[n][max_k + 1][2];
-//        dp[0][0][0] = 0;
-//        dp[0][0][1] = 0;
-//        for (int i = 1; i < n; i++) {
-//            for (int k = max_k; k >= 1; k--) {
-//                dp[i][k][0] = Math.max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i]);
-//                dp[i][k][1] = Math.max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i]);
-//            }
-//        }
-//        // 穷举了 n × max_k × 2 个状态，正确。
-//        return dp[n - 1][max_k][0];
+        return Arrays.stream(dp[n - 1][0]).max().getAsInt();
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * 区别v1解法，本解法使用卖出做完一次交易完成的分割
+     */
+    private static int maxProfitV2(int[] prices) {
+
+        int n = prices.length;
+
+        if (n == 0 || n == 1) {
+            return 0;
+        }
+
+        int[][][] dp = new int[n][2][3];
+
+        for (int i = 0; i < n; i++) {
+            // 先处理第三维度为0的情况
+            dp[i][0][0] = 0;
+
+            // TODO 不同于以买入作为一次交易，如果以卖出作为一次交易，那么交一次数为0的时候，可持有股票
+            if (i == 0) {
+                dp[0][1][0] = -prices[0];
+            } else {
+                dp[i][1][0] = Math.max(dp[i - 1][1][0], -prices[i]);
+            }
+
+            for (int j = 1; j <= 2; j++) {
+                if (i == 0) {
+                    dp[0][0][j] = 0;            // 第0天未持有，买卖多少次都是0
+                    dp[0][1][j] = -prices[0];   // 第0天持有，买卖多少次，剩下的都只能是负的第一天的股价
+                } else {
+                    dp[i][0][j] = Math.max(dp[i - 1][0][j], dp[i - 1][1][j - 1] + prices[i]);   // TODO 卖出算一次交易，因此上一天持有股票只能是j-1次
+                    dp[i][1][j] = Math.max(dp[i - 1][1][j], dp[i - 1][0][j] - prices[i]);
+                }
+            }
+        }
+
+        return Arrays.stream(dp[n - 1][0]).max().getAsInt();
+    }
+
 
     public static void main(String[] args) {
         int[] stocks = new int[]{3, 3, 5, 0, 0, 3, 1, 4};
-        System.out.println("你的答案:" + _maxProfit(stocks));
+        System.out.println("你的答案:");
+        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易两次最大收益为 :" + myMaxProfit(stocks));
         System.out.println("--------------------->");
-        System.out.println("正确答案:" + maxProfit(stocks));
+        System.out.println("正确答案:");
+        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易两次最大收益为 :" + maxProfitV1(stocks));
+        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易两次最大收益为 :" + maxProfitV2(stocks));
     }
 }

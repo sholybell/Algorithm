@@ -33,7 +33,7 @@ package com.holybell.algorithm.dp;
  * 1 <= prices.length <= 3 * 10 ^ 4
  * 0 <= prices[i] <= 10 ^ 4
  */
-public class LeetCode122_maxProfit {
+public class LeetCode122_maxProfit2 {
 
     /**
      * 给定一个数组，数组每个元素表示某天股价，求给定一次买入卖出机会情况下，如何得到最大利润
@@ -81,7 +81,7 @@ public class LeetCode122_maxProfit {
 
     /**
      * 给定一个数组，数组每个元素表示某天股价，求给定一次买入卖出机会情况下，如何得到最大利润
-     * 联系{@link LeetCode121_maxProfit} 本题没有要求最大交易次数，121题要求只能交易一次
+     * 联系{@link LeetCode121_maxProfit1} 本题没有要求最大交易次数，121题要求只能交易一次
      *
      * @param prices 股价数组
      */

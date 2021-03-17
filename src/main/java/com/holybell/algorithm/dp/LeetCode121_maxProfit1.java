@@ -19,7 +19,7 @@ package com.holybell.algorithm.dp;
  * 输出: 0
  * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
  */
-public class LeetCode121_maxProfit {
+public class LeetCode121_maxProfit1 {
 
     /**
      * 给定一个数组，数组每个元素表示某天股价，求给定一次买入卖出机会情况下，如何得到最大利润
