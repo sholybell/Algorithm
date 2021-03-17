@@ -69,9 +69,9 @@ public class LeetCode121_maxProfit {
      *
      * @param prices 股价数组
      */
-    private static int maxProfit(int[] prices) {
+    private static int maxProfitV1(int[] prices) {
         // 如果数组对象不合法，直接返回0
-        if (prices == null || prices.length == 0) {
+        if (prices == null || prices.length == 0 || prices.length == 1) {
             return 0;
         }
         // 分析这个题目，主要变量有：
@@ -103,10 +103,55 @@ public class LeetCode121_maxProfit {
         return dp[prices.length - 1][0];
     }
 
+    // --------------------------------------------------------------------
+
+    // 最小值应该选取0，因为本题最大收益无解的时候，就应该不交易
+    private static long maxProfit = 0;
+
+    /**
+     * 递归解法
+     * <p>
+     * 本解法超时
+     */
+    private static int maxProfitV2(int[] prices) {
+
+
+        // 注意题目数组长度 1 ~ 105
+        if (prices == null || prices.length == 0 || prices.length == 1) {
+            return 0;       // 仅有一天无法获利
+        }
+
+        helper(prices, 0, 0, 0);
+
+        return (int) maxProfit;
+    }
+
+    private static void helper(int[] prices, int profit, int buy, int pos) {
+
+        // 递归终止条件
+        if (pos == prices.length) {
+            return;
+        }
+
+        // 尚未买入
+        if (buy == 0) {
+            // 买入当日股票
+            helper(prices, -prices[pos], 1, pos + 1);
+            // 今日仍然不买入
+            helper(prices, 0, 0, pos + 1);
+        } else {    // 已经买入股票，等候卖出
+            // 当前交易日不卖出
+            helper(prices, profit, buy, pos + 1);
+            // 当前交易日直接卖出
+            maxProfit = Math.max(maxProfit, prices[pos] + profit);
+        }
+    }
+
     public static void main(String[] args) {
         int[] stocks = new int[]{7, 1, 5, 3, 6, 4};
         System.out.println("你的答案:" + _maxProfit(stocks));
         System.out.println("--------------------->");
-        System.out.println("正确答案:" + maxProfit(stocks));
+        System.out.println("正确答案:" + maxProfitV1(stocks));
+        System.out.println("正确答案:" + maxProfitV2(stocks));
     }
 }
