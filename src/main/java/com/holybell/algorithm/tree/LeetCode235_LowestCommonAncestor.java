@@ -1,6 +1,7 @@
 package com.holybell.algorithm.tree;
 
 import com.holybell.algorithm.common.TreeNode;
+import com.holybell.algorithm.common.util.TreeUtil;
 
 import java.util.*;
 
@@ -36,7 +37,6 @@ import java.util.*;
  */
 public class LeetCode235_LowestCommonAncestor {
 
-
     /**
      * 查找二叉树中节点p和节点q的分支节点
      * <p>
@@ -45,18 +45,7 @@ public class LeetCode235_LowestCommonAncestor {
      * @param root 当前要判断是否为分支节点的节点
      */
     private static TreeNode myLowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-
-        if (root == null) {
-            return null;
-        }
-
-        if (root.val < p.val && root.val < q.val) {
-            return myLowestCommonAncestor(root.right, p, q);
-        } else if (root.val > p.val && root.val > q.val) {
-            return myLowestCommonAncestor(root.left, p, q);
-        } else {
-            return root;
-        }
+        return new TreeNode(0);
     }
 
     // --------------------------------------------------------------------
@@ -174,10 +163,15 @@ public class LeetCode235_LowestCommonAncestor {
         node8.left = node7;
         node8.right = node9;
 
-        System.out.println("本次答案:" + myLowestCommonAncestor(node6, node2, node4).val);
-        System.out.println("本次答案:" + myLowestCommonAncestor(node6, node2, node8).val);
-        System.out.println("--------------->");
-        System.out.println("正确答案:" + lowestCommonAncestorV1(node6, node2, node4).val);
-        System.out.println("正确答案:" + lowestCommonAncestorV2(node6, node2, node8).val);
+        System.out.println("二叉树如下:");
+        TreeUtil.show(node6);
+        System.out.println();
+        System.out.println("你的答案:");
+        System.out.println("节点2和节点4的最近公共祖先为:" + myLowestCommonAncestor(node6, node2, node4).val);
+        System.out.println("节点2和节点8的最近公共祖先为:" + myLowestCommonAncestor(node6, node2, node8).val);
+        System.out.println("------------------------------------>");
+        System.out.println("正确答案:");
+        System.out.println("节点2和节点4的最近公共祖先为:" + lowestCommonAncestorV2(node6, node2, node4).val);
+        System.out.println("节点2和节点8的最近公共祖先为:" + lowestCommonAncestorV2(node6, node2, node8).val);
     }
 }

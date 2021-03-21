@@ -14,12 +14,11 @@ import java.util.*;
  * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x
  * 的深度尽可能大（一个节点也可以是它自己的祖先）。”
  * <p>
- * https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/
+ * https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/"
+ * <p>
+ * Related Topics 树
  */
 public class LeetCode236_LowestCommonAncestor {
-
-    private static TreeNode ans;
-
 
     private static TreeNode myLowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         return null;
@@ -60,8 +59,9 @@ public class LeetCode236_LowestCommonAncestor {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    // 解法1：
+    private static TreeNode ans;
 
+    // 解法1：
     private static TreeNode lowestCommonAncestorV1(TreeNode root, TreeNode p, TreeNode q) {
         // Traverse the tree
         recurseTree(root, p, q);
@@ -70,6 +70,10 @@ public class LeetCode236_LowestCommonAncestor {
 
     /**
      * 通过递归，判断当前节点、当前节点的左子树、当前节点的右子树是否存在节点P、Q
+     * <p>
+     * 本解法的思路为： 一个节点node要成为P、Q的最近公共祖先，只有两种情况：
+     * 情况1 : P、Q分别为存在这个节点左右子树lson、rson
+     * 情况2 : P、Q之一为当前node节点，并且另一个节点在该节点的左右子树lson、rson之一
      *
      * @param currentNode 当前节点
      * @param p           节点P
