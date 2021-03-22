@@ -200,6 +200,7 @@ public class LeetCode322_coinChange {
             return 0;
         }
 
+        // TODO cache数组初始值都为-1，这里的条件为if (cache[amount] != -1)，那么将会导致-1的结果无法应用到下方if (res != -1 && res < min)，无法大量减少判断
         if (cache[amount] != 0) {
             return cache[amount];
         }
