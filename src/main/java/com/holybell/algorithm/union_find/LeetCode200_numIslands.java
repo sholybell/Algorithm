@@ -1,6 +1,13 @@
-package com.holybell.algorithm.board.dfs;
+package com.holybell.algorithm.union_find;
+
+import com.holybell.algorithm.common.util.ArrayUtil;
+
+import static com.holybell.algorithm.common.util.ArrayUtil.copyBoard;
+
 
 /**
+ * 难度:中等
+ * <p>
  * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
  * 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
  * 此外，你可以假设该网格的四条边均被水包围。
@@ -32,6 +39,8 @@ package com.holybell.algorithm.board.dfs;
  * n == grid[i].length
  * 1 <= m, n <= 300
  * grid[i][j] 的值为 '0' 或 '1'
+ * <p>
+ * Related Topics 深度优先搜索 广度优先搜索 并查集
  */
 public class LeetCode200_numIslands {
 
@@ -79,7 +88,102 @@ public class LeetCode200_numIslands {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    private static int numIslands(char[][] grid) {
+    /**
+     * 并查集解法
+     */
+    private static int numIslandsV1(char[][] grid) {
+
+        int row = grid.length, col = grid[0].length;
+
+        UnionFindV1 unionFindV1 = new UnionFindV1(grid);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                // 发现陆地
+                if (grid[i][j] == '1') {
+                    // 触发过的陆地设置为海洋，减少后续遍历点位
+                    // TODO 本操作非必须，增加本步骤可以减少并查集union操作提升性能
+                    grid[i][j] = '0';
+                    // 分别遍历这个节点上下左右4个方向的有效点位(下标未越界同时为陆地)
+                    // 将这些有效点位连接到当前陆地
+                    if (i - 1 >= 0 && grid[i - 1][j] == '1') {
+                        unionFindV1.union(i * col + j, (i - 1) * col + j);
+                    }
+                    if (i + 1 < row && grid[i + 1][j] == '1') {
+                        unionFindV1.union(i * col + j, (i + 1) * col + j);
+                    }
+                    if (j - 1 >= 0 && grid[i][j - 1] == '1') {
+                        unionFindV1.union(i * col + j, i * col + j - 1);
+                    }
+                    if (i + 1 < col && grid[i][j + 1] == '1') {
+                        unionFindV1.union(i * col + j, i * col + j + 1);
+                    }
+                }
+            }
+        }
+
+        // 返回岛屿数量
+        return unionFindV1.getCount();
+    }
+
+    static class UnionFindV1 {
+
+        private int[] roots;
+        private int count;
+
+        public UnionFindV1(char[][] grid) {
+            int row = grid.length, col = grid[0].length;
+            roots = new int[row * col];
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < col; j++) {
+                    // 当前为陆地
+                    if (grid[i][j] == '1') {
+                        roots[i * col + j] = i * col + j;         //TODO 注意这里不要写成 i*row+j
+                        // 先默认所有的陆地自己成为一个岛屿
+                        count++;
+                    }
+                }
+            }
+        }
+
+        // 将两个连接的岛屿关联起来
+        public void union(int x, int y) {
+            int xRoot = find(x);
+            int yRoot = find(y);
+            if (xRoot != yRoot) {
+                roots[xRoot] = yRoot;
+                // 将两个岛屿连接成为一个大岛屿，岛屿总数-1
+                count--;
+            }
+        }
+
+        // 寻找一个节点的最终父值
+        private int find(int x) {
+            int root = x;
+            // 最终的父值，应该父值就是自己
+            while (roots[root] != root) {
+                root = roots[root];     // 不断地上溯，记录最终父值
+            }
+
+            while (root != x) {
+                int tmp = roots[x];
+                roots[x] = root;        // 将x查找路径上面的所有值的父值直接指向最终父值
+                x = tmp;
+            }
+
+            return root;
+        }
+
+        public int getCount() {
+            return count;
+        }
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * DFS解法
+     */
+    private static int numIslandsV2(char[][] grid) {
         int islandCount = 0;
         int m = grid.length;        // 矩阵的边长
         int n = grid[0].length;     // 矩阵的边长
@@ -113,9 +217,20 @@ public class LeetCode200_numIslands {
     }
 
     public static void main(String[] args) {
-        char[][] grid = new char[][]{{'1', '1', '0'}, {'1', '1', '0'}, {'0', '0', '1'}};
-        System.out.println("你的答案:" + myNumIslands(grid));
+        char[][] grid = new char[][]{
+                {'1', '1', '0'},
+                {'1', '1', '0'},
+                {'0', '0', '1'}
+        };
+
+        System.out.println("二维数组如下:");
+        ArrayUtil.printBoard(grid);
+
+        System.out.println("你的答案:");
+        System.out.println("岛屿数量:" + myNumIslands(copyBoard(grid)));
         System.out.println("----------------------------->");
-        System.out.println("正确答案:" + numIslands(grid));
+        System.out.println("正确答案:");
+        System.out.println("岛屿数量:" + numIslandsV1(copyBoard(grid)));
+        System.out.println("岛屿数量:" + numIslandsV2(copyBoard(grid)));
     }
 }
