@@ -31,6 +31,8 @@ import java.util.Arrays;
  * <p>
  * 1 <= prices.length <= 105
  * 0 <= prices[i] <= 105
+ * <p>
+ * Related Topics 数组 动态规划
  */
 public class LeetCode123_maxProfit3 {
 
@@ -157,10 +159,10 @@ public class LeetCode123_maxProfit3 {
     public static void main(String[] args) {
         int[] stocks = new int[]{3, 3, 5, 0, 0, 3, 1, 4};
         System.out.println("你的答案:");
-        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易两次最大收益为 :" + myMaxProfit(stocks));
+        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易2次最大收益为 :" + myMaxProfit(stocks));
         System.out.println("--------------------->");
         System.out.println("正确答案:");
-        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易两次最大收益为 :" + maxProfitV1(stocks));
-        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易两次最大收益为 :" + maxProfitV2(stocks));
+        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易2次最大收益为 :" + maxProfitV1(stocks));
+        System.out.println("数组 : " + Arrays.toString(stocks) + " 交易2次最大收益为 :" + maxProfitV2(stocks));
     }
 }
