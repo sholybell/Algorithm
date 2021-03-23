@@ -1,4 +1,4 @@
-package com.holybell.algorithm.dp;
+package com.holybell.algorithm.dp.stock_market;
 
 import java.util.Arrays;
 
