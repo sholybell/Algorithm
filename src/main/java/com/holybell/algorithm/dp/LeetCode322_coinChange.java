@@ -113,6 +113,49 @@ public class LeetCode322_coinChange {
         return dp[amount] == amount + 1 ? -1 : dp[amount];
     }
 
+    /**
+     * 若dp数组使用-1作为初始值的解法
+     */
+    public int coinChangeV22(int[] coins, int amount) {
+        if (amount < 0) {
+            return -1;
+        }
+
+        // 金额为下标时最小需要的硬币数量，dp[i]表示着此时硬币总额为i
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, -1);
+        dp[0] = 0;
+
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+
+                // 由于i表示当前硬币要凑的金额，如果一枚金币究竟超过了，那么dp[i]肯定保存初始值-1就好了
+                if (i - coins[j] < 0) {
+                    continue;
+                }
+
+                // 如果i刚好和硬币等值，那么dp[i]=1，仅需要一枚硬币
+                if (i - coins[j] == 0) {
+                    dp[i] = 1;
+                } else {
+                    // 如果扣掉当前硬币面值的金额没有答案，那么当前这枚硬币自然不能使用
+                    if (dp[i - coins[j]] == -1) {
+                        continue;
+                    } else {
+                        // 如果当前的金额i还是初始值dp[i]=-1，那么表示找到第一个解答
+                        if (dp[i] == -1) {
+                            dp[i] = dp[i - coins[j]] + 1;
+                        } else {
+                            // 当dp[i]!=-1表示已经使用过其他硬币，此时还有dp[i-coins[j]]+1的解法，那么取二者较小值
+                            dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+                        }
+                    }
+                }
+            }
+        }
+        return dp[amount];
+    }
+
     // --------------------------------------------------------------------
 
     private static int min = -1;
