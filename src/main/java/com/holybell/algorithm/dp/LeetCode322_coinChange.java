@@ -182,13 +182,18 @@ public class LeetCode322_coinChange {
             return -1;
         }
 
-        return helperV2(coins, amount, new int[amount + 1]);
+        int limit = amount + 1;
+        int[] cache = new int[amount + 1];
+        Arrays.fill(cache, limit);
+
+        return helperV2(coins, amount, cache, limit);
     }
 
     /**
-     * @param amount 每次递归要计算的最小硬币数量金额
+     * @param amount 每次递归要计算的最小硬币数量金额、
+     * @param limit  建议数组的初始化值，为原amount+1
      */
-    private static int helperV2(int[] coins, int amount, int[] cache) {
+    private static int helperV2(int[] coins, int amount, int[] cache, int limit) {
 
         // amount小于0 无解
         if (amount < 0) {
@@ -200,15 +205,15 @@ public class LeetCode322_coinChange {
             return 0;
         }
 
-        // TODO cache数组初始值都为-1，这里的条件为if (cache[amount] != -1)，那么将会导致-1的结果无法应用到下方if (res != -1 && res < min)，无法大量减少判断
-        if (cache[amount] != 0) {
+        // TODO cache数组初始值都为limit，由于硬币最小为1元，不可能达到可以理解为cache[amount]==limit时还没有解答
+        if (cache[amount] != limit) {
             return cache[amount];
         }
 
         int min = Integer.MAX_VALUE;
         for (int coin : coins) {
             // 选取一枚硬币面值，减去该面值进入下一次递归
-            int res = helperV2(coins, amount - coin, cache);
+            int res = helperV2(coins, amount - coin, cache, limit);
             if (res != -1 && res < min) {
                 min = res + 1;      // TODO 不要忘记+1操作，每次递归本身就代表一枚硬币的选取，res表示剩余额度需要的最少硬币数量
             }
