@@ -9,4 +9,8 @@ public class ListNode {
         this.val = data;
     }
 
+    public ListNode() {
+
+    }
+
 }

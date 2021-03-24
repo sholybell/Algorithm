@@ -1,4 +1,7 @@
-package com.holybell.algorithm.dp;
+package com.holybell.algorithm.dp.knapsnack_problem;
+
+import com.holybell.algorithm.dp.LeetCode509_fib;
+import com.holybell.algorithm.dp.LeetCode70_climbStairs;
 
 import java.util.Arrays;
 
