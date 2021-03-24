@@ -119,7 +119,7 @@ public class LeetCode322_coinChange {
     /**
      * 若dp数组使用-1作为初始值的解法
      */
-    public int coinChangeV22(int[] coins, int amount) {
+    public int coinChangeV12(int[] coins, int amount) {
         if (amount < 0) {
             return -1;
         }
