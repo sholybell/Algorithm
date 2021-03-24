@@ -23,7 +23,7 @@ import java.util.Arrays;
  */
 public class LeetCode152_maxProduct {
 
-    private static int myMaxProduct(int[] nums) {
+    public int myMaxProduct(int[] nums) {
         return -1;
     }
 
@@ -62,18 +62,25 @@ public class LeetCode152_maxProduct {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    private static int maxProductV1(int[] nums) {
+    public int maxProductV1(int[] nums) {
 
         int n = nums.length;
 
+        // 两个数组分表表示，以i为结尾的连续子串乘积最大值和最小值（特殊情况，自己一个元素也构成乘积）
         int[] maxDp = new int[n];
         int[] minDp = new int[n];
 
-        maxDp[0] = minDp[0] = nums[0];
+        System.arraycopy(nums, 0, maxDp, 0, n);
+        System.arraycopy(nums, 0, minDp, 0, n);
 
         int max = minDp[0];
         for (int i = 1; i < n; i++) {
             // TODO 由于乘法存在负负得正的情况，因此通过计算每一个未知乘积的最大值和最小值，用于下一个位置的判断
+
+            // TODO nums[i]参与比较的原因：
+            // TODO 由于maxDp和minDp是从maxDp[0]=minDp[0]=nums[0]的基本类型一步步地推，因此会出现 maxDp[0]=minDp[0]=nums[0]=2 ， nums[1]=-2,
+            // TODO 此时根据maxDp和minDp定义以i为结尾乘积条件，共有 maxDp[i - 1] * nums[i]minDp[i - 1] * nums[i]=-4 , nums[1]=-2的情况，很明显最大值应该选择nums[1]=-2，
+            // TODO 最小值同理可能nums由负数开头
             maxDp[i] = Math.max(nums[i], Math.max(maxDp[i - 1] * nums[i], minDp[i - 1] * nums[i]));
             minDp[i] = Math.min(nums[i], Math.min(maxDp[i - 1] * nums[i], minDp[i - 1] * nums[i]));
             max = Math.max(max, maxDp[i]);
@@ -84,12 +91,12 @@ public class LeetCode152_maxProduct {
 
     // --------------------------------------------------------------------
 
-    private static long max = Long.MIN_VALUE;
+    private long max = Long.MIN_VALUE;
 
     /**
      * 递归解法
      */
-    private static int maxProductV2(int[] nums) {
+    public int maxProductV2(int[] nums) {
 
         // 重置全局变量
         max = Long.MIN_VALUE;
@@ -102,7 +109,7 @@ public class LeetCode152_maxProduct {
         return (int) max;
     }
 
-    private static void helper(int[] nums, long product, int pos) {
+    private void helper(int[] nums, long product, int pos) {
         if (pos == nums.length) {
             return;
         }
@@ -117,17 +124,18 @@ public class LeetCode152_maxProduct {
     }
 
     public static void main(String[] args) {
+        LeetCode152_maxProduct maxProduct = new LeetCode152_maxProduct();
         int[] nums1 = new int[]{2, 3, -2, 4};
         int[] nums2 = new int[]{-2, 0, -1};
         int[] nums3 = new int[]{0, -1, 4, -4, 5, -2, -1, -1, -2, -3, 0, -3, 0, 1, -1, -4, 4, 6, 2, 3, 0, -5, 2, 1, -4, -2, -1, 3, -4, -6, 0, 2, 2, -1, -5, 1, 1, 5, -6, 2, 1, -3, -6, -6, -3, 4, 0, -2, 0, 2};
         System.out.println("你的答案:");
-        System.out.println("数组 : " + Arrays.toString(nums1) + " 最大子数组乘积 : " + myMaxProduct(nums1));
-        System.out.println("数组 : " + Arrays.toString(nums2) + " 最大子数组乘积 : " + myMaxProduct(nums2));
-//        System.out.println("数组 : " + Arrays.toString(nums3) + " 最大子数组乘积 : " + myMaxProduct(nums3));
+        System.out.println("数组 : " + Arrays.toString(nums1) + " 最大子数组乘积 : " + maxProduct.myMaxProduct(nums1));
+        System.out.println("数组 : " + Arrays.toString(nums2) + " 最大子数组乘积 : " + maxProduct.myMaxProduct(nums2));
+//        System.out.println("数组 : " + Arrays.toString(nums3) + " 最大子数组乘积 : " + maxProduct.myMaxProduct(nums3));
         System.out.println("---------------------->");
         System.out.println("正确答案:");
-        System.out.println("数组 : " + Arrays.toString(nums1) + " 最大子数组乘积 : " + maxProductV1(nums1));
-        System.out.println("数组 : " + Arrays.toString(nums2) + " 最大子数组乘积 : " + maxProductV1(nums2));
-//        System.out.println("数组 : " + Arrays.toString(nums3) + " 最大子数组乘积 : " + maxProduct(nums3));
+        System.out.println("数组 : " + Arrays.toString(nums1) + " 最大子数组乘积 : " + maxProduct.maxProductV1(nums1));
+        System.out.println("数组 : " + Arrays.toString(nums2) + " 最大子数组乘积 : " + maxProduct.maxProductV1(nums2));
+//        System.out.println("数组 : " + Arrays.toString(nums3) + " 最大子数组乘积 : " + maxProduct.maxProduct(nums3));
     }
 }
