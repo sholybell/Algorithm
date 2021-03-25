@@ -76,9 +76,11 @@ public class LeetCode82_deleteDuplicates {
         ListNode dummy = new ListNode(0, head);
 
         ListNode cur = dummy;
+        // TODO 前面追加一个dummy节点，如果后面只有一个节点，那么无重复，有重复一定有两个节点
         while (cur.next != null && cur.next.next != null) {
             if (cur.next.val == cur.next.next.val) {
                 int x = cur.next.val;
+                // 如果发现前继节点后面的值和目标x值一致，那么删除后继节点
                 while (cur.next != null && cur.next.val == x) {
                     cur.next = cur.next.next;
                 }
