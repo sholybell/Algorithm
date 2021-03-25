@@ -1,4 +1,4 @@
-package com.holybell.algorithm.dp;
+package com.holybell.algorithm.dp.array;
 
 import java.util.Arrays;
 
@@ -83,7 +83,7 @@ public class LeetCode53_maxSubArray {
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
 
-    private static int maxSubArray(int[] nums) {
+    public static int maxSubArrayV1(int[] nums) {
 
         int[] dp = new int[nums.length];
         dp[0] = nums[0];
@@ -99,13 +99,40 @@ public class LeetCode53_maxSubArray {
         return max;
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * 双重循环解法
+     */
+    public static int maxSubArrayV2(int[] nums) {
+
+        int n = nums.length;
+        if (n == 1) {
+            return nums[0];
+        }
+
+        int max = nums[0];
+        for (int i = 0; i < n; i++) {
+            int temp = nums[i];
+            max = Math.max(temp, max);
+            for (int j = i + 1; j < n; j++) {
+                temp += nums[j];
+                max = Math.max(max, temp);
+            }
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
-        int[] nums = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int[] nums1 = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int[] nums2 = new int[]{-2, 1};
         System.out.println("你的答案:");
-        System.out.println("数组: "+ Arrays.toString(nums) +" 最大子数组和: "+ myMaxSubArray(nums));
+        System.out.println("数组: " + Arrays.toString(nums1) + " 最大子数组和: " + myMaxSubArray(nums1));
+        System.out.println("数组: " + Arrays.toString(nums2) + " 最大子数组和: " + myMaxSubArray(nums2));
         System.out.println("----------------------------------->");
         System.out.println("正确答案:");
-        System.out.println("数组: "+ Arrays.toString(nums) +" 最大子数组和: "+ maxSubArray(nums));
+        System.out.println("数组: " + Arrays.toString(nums1) + " 最大子数组和: " + maxSubArrayV1(nums1));
+        System.out.println("数组: " + Arrays.toString(nums2) + " 最大子数组和: " + maxSubArrayV2(nums2));
 
     }
 }

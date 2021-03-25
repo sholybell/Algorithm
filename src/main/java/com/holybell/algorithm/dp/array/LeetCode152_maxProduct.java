@@ -1,4 +1,4 @@
-package com.holybell.algorithm.dp;
+package com.holybell.algorithm.dp.array;
 
 import java.util.Arrays;
 
