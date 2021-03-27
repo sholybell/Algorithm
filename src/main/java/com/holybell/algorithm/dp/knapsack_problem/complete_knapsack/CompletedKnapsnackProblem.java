@@ -9,8 +9,16 @@ import java.util.Arrays;
  * com.holybell.algorithm.dp.knapsack_problem.*  本包下所有题目都是背包问题变种
  * <p>
  * 参考:https://leetcode-cn.com/problems/coin-change/solution/dong-tai-gui-hua-shi-yong-wan-quan-bei-bao-wen-ti-/
+ * <p>
+ * [0-1背包问题]：
+ * 状态转移方程 ： dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i]]+v[i])
+ * 因为只关心最后一行最后一格数值，每个单元格只参考它上一行，并且是正上方以及正上方左边的单元格数值
+ * <p>
+ * [完全背包问题]:
+ * 状态转移方程 :  dp[i][j] = max(dp[i-1][j], dp[i][j-w[i]]+v[i])
+ * 「完全背包」问题压缩成一行的写法，正好与「0-1 背包」问题相反，「0-1 背包」问题倒着写，「完全背包」问题正着写（看看填表顺序，就明白了）
  */
-public class KnapsnackProblem {
+public class CompletedKnapsnackProblem {
 
     // ------------------------------------------  完全背包问题（物品有0-无限次放置次数）  -------------------------------------------
 
@@ -325,6 +333,9 @@ public class KnapsnackProblem {
         // 可选取物品3数量1个，那么dp[3][3]=dp[3][4-3](可选1个物品3重量:3) + 2(1个物品3价值，此时选取1个物品3) = dp[3][1] + 3 = 0 + 3 = 3，终止，取最大值 8
         // 第四行此时 [0, 2, 4, 6, (8)]
 
+
+        // 总结:
+
         // 输出
         System.out.println(dp[N][W]);
     }
@@ -401,6 +412,6 @@ public class KnapsnackProblem {
         int[] val = new int[]{4, 2, 3};
 //        knapsnackV1(4, wt.length, wt, val);
 //        knapsnackV2(4, wt.length, wt, val);
-        knapsnackV3(4, wt.length, wt, val);
+//        knapsnackV3(4, wt.length, wt, val);
     }
 }

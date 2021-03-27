@@ -1,4 +1,4 @@
-package com.holybell.algorithm.dp.knapsnack_problem;
+package com.holybell.algorithm.dp.knapsack_problem.complete_knapsack;
 
 import com.holybell.algorithm.dp.LeetCode509_fib;
 import com.holybell.algorithm.dp.LeetCode70_climbStairs;
@@ -41,6 +41,11 @@ import java.util.Arrays;
  * 0 <= amount <= 104
  * <p>
  * Related Topics 动态规划
+ * <p>
+ * <p>
+ * {@link LeetCode70_climbStairs}   DP方程类似 F(N)=F(N-1)+F(N-2)+ ... +F(N-K)
+ * {@link LeetCode509_fib}          DP方程类似 F(N)=F(N-1)+F(N-2)+ ... +F(N-K)
+ * {@link LeetCode518_coinChange2}  给定硬币种类下，构成某个金额的排列（排序无关）
  **/
 public class LeetCode322_coinChange {
 
@@ -117,7 +122,7 @@ public class LeetCode322_coinChange {
     }
 
     /**
-     * 若dp数组使用-1作为初始值的解法
+     * 若dp数组使用-1作为初始值的解法  (本题解过分注重细节)
      */
     public int coinChangeV12(int[] coins, int amount) {
         if (amount < 0) {
