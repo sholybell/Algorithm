@@ -1,4 +1,4 @@
-package com.holybell.algorithm.tree;
+package com.holybell.algorithm.tree.bst;
 
 import com.holybell.algorithm.common.TreeNode;
 import com.holybell.algorithm.common.util.TreeUtil;
