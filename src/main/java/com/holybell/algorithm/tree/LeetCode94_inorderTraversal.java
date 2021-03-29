@@ -1,13 +1,12 @@
 package com.holybell.algorithm.tree;
 
 import com.holybell.algorithm.common.TreeNode;
+import com.holybell.algorithm.common.util.ListUtil;
+import com.holybell.algorithm.common.util.TreeUtil;
 import com.holybell.algorithm.tree.bst.LeetCode173_BSTIterator;
 import com.holybell.algorithm.tree.bst.LeetCode98_isValidBST;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 难度:中等
@@ -169,5 +168,17 @@ public class LeetCode94_inorderTraversal {
         }
 
         return ans;
+    }
+
+    public static void main(String[] args) {
+        LeetCode94_inorderTraversal inorderTraversal = new LeetCode94_inorderTraversal();
+        TreeNode root = TreeUtil.createBinaryTreeByArray(new Integer[]{7, 3, 15, null, null, 9, 20}, 0);
+        System.out.println("二叉树如下:");
+        TreeUtil.show(root);
+        System.out.println("你的答案:");
+        System.out.println("二叉树中序遍历 : " + Arrays.toString(inorderTraversal.inorderTraversal(root).toArray()));
+        System.out.println("---------------------------------->");
+        System.out.println("正确答案:");
+        System.out.println("二叉树中序遍历 : " + Arrays.toString(inorderTraversal.inorderTraversalV1(root).toArray()));
     }
 }
